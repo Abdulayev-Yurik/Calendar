@@ -47,7 +47,7 @@ public class RunCalendar {
     }
 
     private static void generateView(int monthLength, int firstDayInWeek, int day) {
-        System.out.println("   П   В   С   Ч   П   " + colorPrintWeekend("С   Н"));
+        System.out.println("   П   В   С   Ч   П   " + ANSI_RED + "С   Н" + ANSI_RESET);
         int counter = 1;
         for (int dayInFirsWeek = 1; dayInFirsWeek <= DAYS_IN_WEEK; dayInFirsWeek++) {
             if (dayInFirsWeek >= firstDayInWeek)
@@ -74,9 +74,5 @@ public class RunCalendar {
             System.out.printf(ANSI_RED + "%4d" + ANSI_RESET, counter);
         else
             System.out.printf("%4d", counter);
-    }
-
-    private static String colorPrintWeekend(String text) {
-        return ANSI_RED + text + ANSI_RESET;
     }
 }
