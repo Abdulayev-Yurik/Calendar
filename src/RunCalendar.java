@@ -23,7 +23,6 @@ public class RunCalendar {
         try {
             parseDate(Integer.parseInt(year), Integer.parseInt(month), Integer.parseInt(day));
         } catch (Exception e){
-            e.printStackTrace();
             parseDate(LocalDate.now().getYear(), LocalDate.now().getMonth().getValue(), LocalDate.now().getDayOfMonth());
         }
     }
