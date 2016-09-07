@@ -2,15 +2,12 @@ package calendar;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.util.Scanner;
-
-import static java.lang.Integer.parseInt;
 
 
 /**
  * Created by yurik on 01.09.16.
  */
-public class RunCalendar {
+class PrintToConsole {
 
     private static final String ANSI_RESET = "\u001B[0m";
     private static final String ANSI_RED = "\u001B[31m";
@@ -18,24 +15,7 @@ public class RunCalendar {
     private static final int DAYS_IN_WEEK = 7;
     private static final int MAX_WEEKS = 6;
 
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Please enter year: ");
-        String year = scanner.nextLine();
-        System.out.print("Please enter month: ");
-        String month = scanner.nextLine();
-        System.out.print("Please enter day: ");
-        String day = scanner.nextLine();
-
-        try {
-            parseDate(parseInt(year), parseInt(month), parseInt(day));
-        } catch (Exception e) {
-            LocalDate now = LocalDate.now();
-            parseDate(now.getYear(), now.getMonth().getValue(), now.getDayOfMonth());
-        }
-    }
-
-    private static void parseDate(int year, int month, int day) {
+    static void parseDate(int year, int month, int day) {
         if (month <= 0 || month > 12) {
             System.out.println("incorrect");
             return;
