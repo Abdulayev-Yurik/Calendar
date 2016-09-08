@@ -2,6 +2,9 @@ package calendar;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.format.TextStyle;
+import java.util.Formatter;
+import java.util.Locale;
 
 
 /**
@@ -27,7 +30,7 @@ class PrintToConsole {
     }
 
     private static void generateView(int monthLength, int firstDayInWeek, int day) {
-        System.out.println("   П   В   С   Ч   П   " + ANSI_RED + "С   Н" + ANSI_RESET);
+        System.out.println(printDaysName());
         int counter = 1;
         for (int dayInFirsWeek = 1; dayInFirsWeek <= DAYS_IN_WEEK; dayInFirsWeek++) {
             if (dayInFirsWeek >= firstDayInWeek)
@@ -45,6 +48,18 @@ class PrintToConsole {
             }
             System.out.println();
         }
+    }
+
+    private static String printDaysName() {
+        String daysName = "";
+        for (int i = 1; i <= DAYS_IN_WEEK; i++) {
+            String day = DayOfWeek.of(i).getDisplayName(TextStyle.SHORT, Locale.getDefault()).toUpperCase();
+            if (i == DayOfWeek.SATURDAY.getValue() || i == DayOfWeek.SUNDAY.getValue())
+                daysName += new Formatter().format(ANSI_RED + "%4s" + ANSI_RESET, day);
+            else
+                daysName += new Formatter().format("%4s", day);
+        }
+        return daysName;
     }
 
     private static void printDay(int dayInWeek, int counter, int day) {
