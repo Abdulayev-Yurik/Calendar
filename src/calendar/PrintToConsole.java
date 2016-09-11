@@ -17,6 +17,7 @@ class PrintToConsole {
     private static final String ANSI_CYAN = "\u001B[36m";
     private static final int DAYS_IN_WEEK = 7;
     private static final int MAX_WEEKS = 6;
+    private static int counter = 1;
 
     static void parseDate(int year, int month, int day) {
         if (month <= 0 || month > 12) {
@@ -31,22 +32,25 @@ class PrintToConsole {
 
     private static void generateView(int monthLength, int firstDayInWeek, int day) {
         System.out.println(printDaysName());
-        int counter = 1;
-        for (int dayInFirsWeek = 1; dayInFirsWeek <= DAYS_IN_WEEK; dayInFirsWeek++) {
-            if (dayInFirsWeek >= firstDayInWeek)
-                printDay(dayInFirsWeek, counter++, day);
-            else
-                System.out.print("    ");
-        }
-        System.out.println();
-        for (int week = 2; week <= MAX_WEEKS; week++) {
+        for (int week = 1; week <= MAX_WEEKS; week++) {
             for (int dayInWeek = 1; dayInWeek <= DAYS_IN_WEEK; dayInWeek++) {
                 if (counter <= monthLength)
-                    printDay(dayInWeek, counter++, day);
+                    actionDay(firstDayInWeek, dayInWeek, week, day);
                 else
                     break;
             }
             System.out.println();
+        }
+    }
+
+    private static void actionDay(int firstDayInWeek, int dayInWeek, int week, int day) {
+        if (week == 1) {
+            if (dayInWeek >= firstDayInWeek)
+                printDay(dayInWeek, day);
+            else
+                System.out.print("    ");
+        } else {
+            printDay(dayInWeek, day);
         }
     }
 
@@ -62,12 +66,13 @@ class PrintToConsole {
         return daysName;
     }
 
-    private static void printDay(int dayInWeek, int counter, int day) {
+    private static void printDay(int dayInWeek, int day) {
         if (counter == day)
             System.out.printf(ANSI_CYAN + "%4d" + ANSI_RESET, counter);
         else if (dayInWeek >= DayOfWeek.SATURDAY.getValue())
             System.out.printf(ANSI_RED + "%4d" + ANSI_RESET, counter);
         else
             System.out.printf("%4d", counter);
+        counter++;
     }
 }
