@@ -35,7 +35,7 @@ class PrintToConsole {
         for (int week = 0; week <= MAX_WEEKS; week++) {
             for (int dayInWeek = 1; dayInWeek <= DAYS_IN_WEEK; dayInWeek++) {
                 if (week == 0)
-                    printDay(dayInWeek, day, printDaysName(dayInWeek));
+                    System.out.print(printDay(week, dayInWeek, day, printDaysName(dayInWeek)));
                 else if (counter <= monthLength)
                     actionDay(firstDayInWeek, dayInWeek, week, day);
                 else
@@ -46,14 +46,10 @@ class PrintToConsole {
     }
 
     private static void actionDay(int firstDayInWeek, int dayInWeek, int week, int day) {
-        if (week == 1) {
-            if (dayInWeek >= firstDayInWeek) {
-                printDay(dayInWeek, day, Integer.toString(counter));
-                counter++;
-            }else
-                System.out.print(format("%4s", ""));
-        } else{
-            printDay(dayInWeek, day, Integer.toString(counter));
+        if (week == 1 && dayInWeek < firstDayInWeek)
+            System.out.print(format("%4s", ""));
+        else {
+            System.out.print(printDay(week, dayInWeek, day, Integer.toString(counter)));
             counter++;
         }
     }
@@ -62,12 +58,12 @@ class PrintToConsole {
         return DayOfWeek.of(dayNumber).getDisplayName(TextStyle.SHORT, Locale.getDefault()).toUpperCase();
     }
 
-    private static void printDay(int dayInWeek, int day, String value) {
-        if (counter == day)
-            System.out.print(format(ANSI_CYAN + "%4s" + ANSI_RESET, value));
+    private static String printDay(int week, int dayInWeek, int day, String value) {
+        if (counter == day && week != 0)
+            return format(ANSI_CYAN + "%4s" + ANSI_RESET, value);
         else if (dayInWeek == DayOfWeek.SATURDAY.getValue() || dayInWeek == DayOfWeek.SUNDAY.getValue())
-            System.out.print(format(ANSI_RED + "%4s" + ANSI_RESET, value));
+            return format(ANSI_RED + "%4s" + ANSI_RESET, value);
         else
-            System.out.print(format("%4s", value));
+            return format("%4s", value);
     }
 }
