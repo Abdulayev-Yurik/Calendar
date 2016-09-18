@@ -7,7 +7,6 @@ import java.util.Locale;
 
 import static java.lang.String.format;
 
-
 /**
  * Created by yurik on 01.09.16.
  */
@@ -38,21 +37,23 @@ class PrintToConsole {
                 if (week == 0)
                     System.out.print(getTypeDay(week, dayInWeek, day, getDaysName(dayInWeek)));
                 else if (counter <= monthLength)
-                    printDay(firstDayInWeek, dayInWeek, week, day);
+                    System.out.print(printDay(firstDayInWeek, dayInWeek, week, day));
                 else
                     break;
             }
-            System.out.println();
+            System.out.print("\n");
         }
     }
 
-    private static void printDay(int firstDayInWeek, int dayInWeek, int week, int day) {
+    private static String printDay(int firstDayInWeek, int dayInWeek, int week, int day) {
+        String dayValue;
         if (week == 1 && dayInWeek < firstDayInWeek)
-            System.out.print(getDayFormat(""));
+            dayValue = getDayFormat("");
         else {
-            System.out.print(getTypeDay(week, dayInWeek, day, Integer.toString(counter)));
+            dayValue = getTypeDay(week, dayInWeek, day, Integer.toString(counter));
             counter++;
         }
+        return dayValue;
     }
 
     private static String getTypeDay(int week, int dayInWeek, int day, String value) {
