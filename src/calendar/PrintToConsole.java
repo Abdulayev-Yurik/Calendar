@@ -13,6 +13,7 @@ import static java.lang.String.format;
  */
 class PrintToConsole {
 
+    private static final String TYPICAL_STRING_FORMAT = "%4s";
     private static final String ANSI_RESET = "\u001B[0m";
     private static final String ANSI_RED = "\u001B[31m";
     private static final String ANSI_CYAN = "\u001B[36m";
@@ -35,9 +36,9 @@ class PrintToConsole {
         for (int week = 0; week <= MAX_WEEKS; week++) {
             for (int dayInWeek = 1; dayInWeek <= DAYS_IN_WEEK; dayInWeek++) {
                 if (week == 0)
-                    System.out.print(printDay(week, dayInWeek, day, printDaysName(dayInWeek)));
+                    System.out.print(getTypeDay(week, dayInWeek, day, getDaysName(dayInWeek)));
                 else if (counter <= monthLength)
-                    actionDay(firstDayInWeek, dayInWeek, week, day);
+                    printDay(firstDayInWeek, dayInWeek, week, day);
                 else
                     break;
             }
@@ -45,25 +46,29 @@ class PrintToConsole {
         }
     }
 
-    private static void actionDay(int firstDayInWeek, int dayInWeek, int week, int day) {
+    private static void printDay(int firstDayInWeek, int dayInWeek, int week, int day) {
         if (week == 1 && dayInWeek < firstDayInWeek)
-            System.out.print(format("%4s", ""));
+            System.out.print(getDayFormat(""));
         else {
-            System.out.print(printDay(week, dayInWeek, day, Integer.toString(counter)));
+            System.out.print(getTypeDay(week, dayInWeek, day, Integer.toString(counter)));
             counter++;
         }
     }
 
-    private static String printDaysName(int dayNumber) {
-        return DayOfWeek.of(dayNumber).getDisplayName(TextStyle.SHORT, Locale.getDefault()).toUpperCase();
+    private static String getTypeDay(int week, int dayInWeek, int day, String value) {
+        if (counter == day && week != 0)
+            return ANSI_CYAN + getDayFormat(value) + ANSI_RESET;
+        else if (dayInWeek == DayOfWeek.SATURDAY.getValue() || dayInWeek == DayOfWeek.SUNDAY.getValue())
+            return ANSI_RED + getDayFormat(value) + ANSI_RESET;
+        else
+            return getDayFormat(value);
     }
 
-    private static String printDay(int week, int dayInWeek, int day, String value) {
-        if (counter == day && week != 0)
-            return format(ANSI_CYAN + "%4s" + ANSI_RESET, value);
-        else if (dayInWeek == DayOfWeek.SATURDAY.getValue() || dayInWeek == DayOfWeek.SUNDAY.getValue())
-            return format(ANSI_RED + "%4s" + ANSI_RESET, value);
-        else
-            return format("%4s", value);
+    private static String getDayFormat(String value) {
+        return format(TYPICAL_STRING_FORMAT, value);
+    }
+
+    private static String getDaysName(int dayNumber) {
+        return DayOfWeek.of(dayNumber).getDisplayName(TextStyle.SHORT, Locale.getDefault()).toUpperCase();
     }
 }
