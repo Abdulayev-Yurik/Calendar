@@ -10,7 +10,7 @@ import static java.lang.String.format;
 /**
  * Created by yurik on 01.09.16.
  */
-class PrintToConsole {
+public class PrintToConsole {
 
     private static final String TYPICAL_STRING_FORMAT = "%4s";
     private static final String ANSI_RESET = "\u001B[0m";
@@ -20,7 +20,7 @@ class PrintToConsole {
     private static final int MAX_WEEKS = 6;
     private static int counter = 1;
 
-    static void parseDate(int year, int month, int day) {
+    public static void parseDate(int year, int month, int day) {
         if (month <= 0 || month > 12) {
             System.out.println("incorrect");
             return;
