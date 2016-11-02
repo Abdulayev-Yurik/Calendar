@@ -39,15 +39,4 @@ public class TestedMethods {
         return DayOfWeek.of(dayNumber).getDisplayName(TextStyle.SHORT, Locale.getDefault()).toUpperCase();
     }
 
-    static String printDay(int firstDayInWeek, int dayInWeek, int week, int day) {
-        String dayValue;
-        if (week == 1 && dayInWeek < firstDayInWeek)
-            dayValue = getDayFormat("");
-        else {
-            dayValue = getTypeDay(week, dayInWeek, day, Integer.toString(counter));
-            counter++;
-        }
-        return dayValue;
-    }
-
 }

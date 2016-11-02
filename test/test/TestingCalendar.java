@@ -7,8 +7,12 @@ import org.junit.Test;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.time.DateTimeException;
+import java.time.DayOfWeek;
+import java.time.format.TextStyle;
 import java.util.Locale;
 
+import static calendar.PrintToConsole.parseDate;
+import static java.time.LocalDate.now;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
@@ -63,6 +67,18 @@ public class TestingCalendar extends TestedMethods {
     }
 
     @Test
+    public void assertWeekendColor(){
+        int thisDay = 2;
+        for (int numberDay = 6; numberDay <= 7; numberDay++) {
+            System.out.print(getTypeDay(1, numberDay, thisDay, numberDay + ""));
+        }
+        StringBuilder builder = new StringBuilder();
+        builder.append(String.format(TYPICAL_STRING_FORMAT, ANSI_RED + getDayName(6, Locale.ENGLISH)));
+        builder.append(String.format(TYPICAL_STRING_FORMAT, ANSI_RED + getDayName(7, Locale.ENGLISH)));
+        assertThat(builder.toString(), is(outContent.toString()));
+    }
+
+    @Test
     public void equalColorPrint() {
         int week = 2;
         int numberDay = 1;
@@ -78,7 +94,8 @@ public class TestingCalendar extends TestedMethods {
 
     @Test
     public void equalsDayName() throws DateTimeException {
-        String dayName = TestedMethods.getDayName(1, Locale.ENGLISH);
+        int numberDay = 1;
+        String dayName = DayOfWeek.of(numberDay).getDisplayName(TextStyle.SHORT, Locale.ENGLISH).toUpperCase();
         assertThat(dayName, notNullValue());
         assertThat(dayName, equalTo("MON"));
     }
