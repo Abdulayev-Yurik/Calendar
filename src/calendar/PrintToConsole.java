@@ -3,6 +3,8 @@ package calendar;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.TextStyle;
+import java.time.temporal.WeekFields;
+import java.util.Arrays;
 import java.util.Locale;
 
 import static java.lang.String.format;
@@ -12,11 +14,11 @@ import static java.lang.String.format;
  */
 public class PrintToConsole {
 
-    private static final String TYPICAL_STRING_FORMAT = "%4s";
-    private static final String ANSI_RESET = "\u001B[0m";
-    private static final String ANSI_RED = "\u001B[31m";
+    static final String TYPICAL_STRING_FORMAT = "%4s";
+    static final String ANSI_RESET = "\u001B[0m";
+    static final String ANSI_RED = "\u001B[31m";
     private static final String ANSI_CYAN = "\u001B[36m";
-    private static final int DAYS_IN_WEEK = 7;
+    static final int DAYS_IN_WEEK = 7;
     private static final int MAX_WEEKS = 6;
     private static int counter = 1;
 
@@ -32,17 +34,20 @@ public class PrintToConsole {
     }
 
     private static void generateView(int monthLength, int firstDayInWeek, int day) {
-        for (int week = 0; week <= MAX_WEEKS; week++) {
-            for (int dayInWeek = 1; dayInWeek <= DAYS_IN_WEEK; dayInWeek++) {
-                if (week == 0)
-                    System.out.print(getTypeDay(week, dayInWeek, day, getDaysName(dayInWeek)));
-                else if (counter <= monthLength)
-                    System.out.print(printDay(firstDayInWeek, dayInWeek, week, day));
-                else
-                    break;
-            }
-            System.out.print("\n");
+        System.out.println(new WeekNames().getWeekNames(Locale.UK, Arrays.asList(0, 6, 4)));
+        for (int numberWeek = 0; numberWeek < MAX_WEEKS; numberWeek++) {
+//            WeekFields.of(Locale.ENGLISH).getMinimalDaysInFirstWeek()
+//            getLine(numberWeek,firstDayInWeek, day, monthLength);
         }
+//        for (int week = 1; week <= MAX_WEEKS; week++) {
+//            for (int dayInWeek = 1; dayInWeek <= DAYS_IN_WEEK; dayInWeek++) {
+//                if (counter <= monthLength)
+//                    System.out.print(printDay(firstDayInWeek, dayInWeek, week, day));
+//                else
+//                    return;
+//            }
+//            System.out.print("\n");
+//        }
     }
 
     private static String printDay(int firstDayInWeek, int dayInWeek, int week, int day) {
@@ -70,6 +75,6 @@ public class PrintToConsole {
     }
 
     private static String getDaysName(int dayNumber) {
-        return DayOfWeek.of(dayNumber).getDisplayName(TextStyle.SHORT, Locale.getDefault()).toUpperCase();
+        return DayOfWeek.of(dayNumber).getDisplayName(TextStyle.SHORT, Locale.ENGLISH).toUpperCase();
     }
 }
