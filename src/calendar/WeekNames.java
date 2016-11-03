@@ -18,8 +18,8 @@ class WeekNames {
 
     String getWeekNames(Locale locale, List weekends) {
         StringBuilder list = new StringBuilder();
-        for (int numberDay = 0; numberDay < DAYS_IN_WEEK; numberDay++) {
-            String name = String.format(TYPICAL_STRING_FORMAT, getDayName(locale, numberDay));
+        for (int numberDay = 1; numberDay <= DAYS_IN_WEEK; numberDay++) {
+            String name = String.format(TYPICAL_STRING_FORMAT, getDayName(locale, numberDay - 1));
             name = CalendarUtils.isWeekend(numberDay, weekends) ? toWeekendColor(name) : name;
             list.append(name);
         }
