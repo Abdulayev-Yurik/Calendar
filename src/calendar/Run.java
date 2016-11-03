@@ -18,10 +18,11 @@ public class Run {
         Scanner scanner = new Scanner(System.in);
 
 //        int firstDay = scanner.nextInt();
+        System.out.println("Enter start day index: 1- Mon... 7 - Sun");
         int firstDay = scanner.nextInt();
 
-//        List weekends = getWeekends(scanner);
-        List weekends = Arrays.asList(6,7);
+        List weekends = getWeekends(scanner);
+//        List weekends = Arrays.asList(6,7);
         System.out.print("Please enter year: ");
         String year = scanner.nextLine();
         System.out.print("Please enter month: ");
