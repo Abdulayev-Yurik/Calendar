@@ -6,7 +6,7 @@ import java.util.Locale;
 /**
  * Created by employee on 11/3/16.
  */
-public class WeekDays extends CalendarUtils{
+public class WeekDaysValues extends CalendarUtils{
 
     public static String getWeekDays(int numberWeek, int firstDayOfWeek,
                                      int monthLength, int thisDay, Locale locale, List weekends) {
