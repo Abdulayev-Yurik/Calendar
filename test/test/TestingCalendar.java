@@ -11,7 +11,6 @@ import java.time.DayOfWeek;
 import java.time.format.TextStyle;
 import java.util.Locale;
 
-import static calendar.PrintToConsole.parseDate;
 import static java.time.LocalDate.now;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertEquals;

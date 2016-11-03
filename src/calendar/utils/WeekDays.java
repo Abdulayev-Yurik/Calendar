@@ -1,4 +1,4 @@
-package calendar;
+package calendar.utils;
 
 import java.util.List;
 import java.util.Locale;
@@ -6,21 +6,21 @@ import java.util.Locale;
 /**
  * Created by employee on 11/3/16.
  */
-class WeekDays {
+public class WeekDays extends CalendarUtils{
 
-    static String getWeekDays(int numberWeek, int firstDayOfWeek,
-                              int monthLength, int thisDay, Locale locale, List weekends) {
+    public static String getWeekDays(int numberWeek, int firstDayOfWeek,
+                                     int monthLength, int thisDay, Locale locale, List weekends) {
         if (numberWeek == 0) {
-            return getFirstWeek(firstDayOfWeek, thisDay, locale, weekends);
+            return getFirstWeek(firstDayOfWeek, thisDay, weekends);
         } else {
-            return getAnotherWeek(7 * (numberWeek) - firstDayOfWeek + 2, thisDay, locale, weekends, monthLength);
+            return getAnotherWeek(7 * (numberWeek) - firstDayOfWeek + 2, thisDay, weekends, monthLength);
         }
     }
 
-    private static String getAnotherWeek(int firstDayOfWeek, int thisDay, Locale locale, List weekends, int monthLength) {
+    private static String getAnotherWeek(int firstDayOfWeek, int thisDay, List weekends, int monthLength) {
         StringBuilder builder = new StringBuilder();
         int counter = firstDayOfWeek;
-        for (int numberDay = 1; numberDay <= PrintToConsole.DAYS_IN_WEEK; numberDay++) {
+        for (int numberDay = 1; numberDay <= DAYS_IN_WEEK; numberDay++) {
             if (counter > monthLength) break;
             builder.append(getColorDay(numberDay, counter, thisDay, weekends));
             counter++;
@@ -28,10 +28,10 @@ class WeekDays {
         return builder.toString();
     }
 
-    private static String getFirstWeek(int firstDayOfWeek, int thisDay, Locale locale, List weekends) {
+    private static String getFirstWeek(int firstDayOfWeek, int thisDay, List weekends) {
         StringBuilder builder = new StringBuilder();
         int counter = 1;
-        for (int numberDay = 1; numberDay <= PrintToConsole.DAYS_IN_WEEK; numberDay++) {
+        for (int numberDay = 1; numberDay <= DAYS_IN_WEEK; numberDay++) {
             if (numberDay >= firstDayOfWeek) {
                 builder.append(getColorDay(numberDay, counter, thisDay, weekends));
                 counter++;
@@ -46,8 +46,8 @@ class WeekDays {
         String day = getNumberDay(Integer.toString(dayValue));
         if (dayValue == thisDay) {
             return CalendarUtils.toThisDayColor(day);
-        } else if (CalendarUtils.isWeekend(numberDay, weekends)) {
-            return CalendarUtils.toWeekendColor(getNumberDay(Integer.toString(dayValue)));
+//        } else if (CalendarUtils.isWeekend(numberDay, weekends)) {
+//            return CalendarUtils.toWeekendColor(getNumberDay(Integer.toString(dayValue)));
         } else {
             return getNumberDay(Integer.toString(dayValue));
         }
