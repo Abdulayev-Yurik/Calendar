@@ -12,10 +12,10 @@ import java.util.Locale;
  */
 public class WeekdaysNames extends CalendarUtils {
 
-    public String getWeekNames(Locale locale, List weekends, int dayValue) {
+    public String getWeekdaysName(Locale locale, List weekends, int dayValue) {
         StringBuilder list = new StringBuilder();
         for (int numberDay = 1; numberDay <= DAYS_IN_WEEK; numberDay++) {
-            String formatName = String.format(TYPICAL_STRING_FORMAT, getDayName(locale, dayValue - 1));
+            String formatName = String.format(TYPICAL_STRING_FORMAT, getDayValue(locale, dayValue - 1));
             formatName = CalendarUtils.isWeekend(dayValue, weekends) ? toWeekendColor(formatName) : formatName;
             list.append(formatName);
             dayValue = nextDay(dayValue);
@@ -24,7 +24,7 @@ public class WeekdaysNames extends CalendarUtils {
     }
 
     @NotNull
-    private String getDayName(Locale locale, int numberDay) {
+    private String getDayValue(Locale locale, int numberDay) {
         return WeekFields.of(Locale.UK)
                 .getFirstDayOfWeek()
                 .plus(numberDay)
