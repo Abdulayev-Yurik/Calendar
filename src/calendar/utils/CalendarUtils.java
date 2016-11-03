@@ -32,6 +32,7 @@ public class CalendarUtils {
     }
 
     public static int backDay(int value) {
-        return value == 1 ? 7 : --value;
+        int[] a = {2,1,7,6,5,4,3};
+        return a[value];
     }
 }

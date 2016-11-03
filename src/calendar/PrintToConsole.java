@@ -11,7 +11,7 @@ import java.util.Locale;
 /**
  * Created by yurik on 01.09.16.
  */
-public class PrintToConsole {
+class PrintToConsole {
 
     private static final int MAX_WEEKS = 6;
 
@@ -31,8 +31,8 @@ public class PrintToConsole {
         StringBuilder builder = new StringBuilder();
         builder.append(new WeekNames().getWeekNames(Locale.UK, weekends, customFirstDay)).append("\n");
         for (int numberWeek = 0; numberWeek < MAX_WEEKS; numberWeek++) {
-            int v = CalendarUtils.backDay(firstDayInWeek);
-            builder.append(WeekDays.getWeekDays(numberWeek, 2, monthLength,
+            int v = CalendarUtils.backDay(customFirstDay - 1);
+            builder.append(WeekDays.getWeekDays(numberWeek, v, monthLength,
                     day, Locale.UK, weekends))
                     .append("\n");
         }
