@@ -1,6 +1,5 @@
 package calendar.utils;
 
-import java.time.DayOfWeek;
 import java.util.List;
 import java.util.Locale;
 
@@ -49,7 +48,6 @@ public class WeekDaysValues extends CalendarUtils{
             return CalendarUtils.toThisDayColor(day);
 //        } else if (CalendarUtils.isWeekend(numberDay, weekends)) {
 //            return CalendarUtils.toWeekendColor(getNumberDay(Integer.toString(dayValue)));
-            DayOfWeek
         } else {
             return getNumberDay(Integer.toString(dayValue));
         }

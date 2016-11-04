@@ -1,6 +1,7 @@
 package calendar;
 
 import calendar.utils.CalendarUtils;
+import calendar.utils.NewWeekDaysValues;
 import calendar.utils.WeekDaysValues;
 import calendar.utils.WeekdaysNames;
 
@@ -22,6 +23,9 @@ class PrintToConsole {
         }
         LocalDate thisDate = LocalDate.of(year, month, 1);
         int firstDayInWeek = thisDate.getDayOfWeek().getValue();
+        if (firstDay != 0){
+            firstDayInWeek = firstDay;
+        }
         int monthLength = thisDate.getMonth().length(thisDate.isLeapYear());
 
         System.out.println(generateView(monthLength, firstDayInWeek, currentDay, weekends, firstDay));
@@ -31,12 +35,13 @@ class PrintToConsole {
                                        int currentDay, List weekends, int customFirstDay) {
         StringBuilder builder = new StringBuilder();
         builder.append(new WeekdaysNames().getWeekdaysName(Locale.UK, weekends, customFirstDay)).append("\n");
-        for (int numberWeek = 0; numberWeek < MAX_WEEKS; numberWeek++) {
-            int v = CalendarUtils.backDay(customFirstDay - 1);                  // FIXME: 11/3/16 not correct
-            builder.append(WeekDaysValues.getWeekDays(numberWeek, v, monthLength,
-                    currentDay, Locale.UK, weekends))
-                    .append("\n");
-        }
+//        for (int numberWeek = 0; numberWeek < MAX_WEEKS; numberWeek++) {
+//            int v = CalendarUtils.backDay(customFirstDay - 1);                  // FIXME: 11/3/16 not correct
+//            builder.append(WeekDaysValues.getWeekDays(numberWeek, v, monthLength,
+//                    currentDay, Locale.UK, weekends))
+//                    .append("\n");
+//        }
+        builder.append(NewWeekDaysValues.getWeekDays(firstDayInWeek, monthLength, currentDay,weekends));
         return builder.toString();
     }
 }

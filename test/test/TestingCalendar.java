@@ -1,5 +1,6 @@
 package test;
 
+import calendar.utils.NewWeekDaysValues;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -9,6 +10,7 @@ import java.io.PrintStream;
 import java.time.DateTimeException;
 import java.time.DayOfWeek;
 import java.time.format.TextStyle;
+import java.util.Arrays;
 import java.util.Locale;
 
 import static java.time.LocalDate.now;
@@ -23,15 +25,15 @@ public class TestingCalendar extends TestedMethods {
     private static final String TYPICAL_STRING_FORMAT = "%4s";
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
 
-    @Before
-    public void setUpStreams() {
-        System.setOut(new PrintStream(outContent));
-    }
-
-    @After
-    public void cleanUpStreams() {
-        System.setOut(null);
-    }
+//    @Before
+//    public void setUpStreams() {
+//        System.setOut(new PrintStream(outContent));
+//    }
+//
+//    @After
+//    public void cleanUpStreams() {
+//        System.setOut(null);
+//    }
 
     @Test
     public void assertWeekend(){
@@ -97,6 +99,11 @@ public class TestingCalendar extends TestedMethods {
         String dayName = DayOfWeek.of(numberDay).getDisplayName(TextStyle.SHORT, Locale.ENGLISH).toUpperCase();
         assertThat(dayName, notNullValue());
         assertThat(dayName, equalTo("MON"));
+    }
+
+    @Test
+    public void newCalendarDays(){
+//        NewWeekDaysValues.getWeekDays(0, 2, 30, 4, Locale.ENGLISH, Arrays.asList(6,7));
     }
 
 
