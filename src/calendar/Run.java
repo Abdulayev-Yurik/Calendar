@@ -1,9 +1,11 @@
 package calendar;
 
+import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Stream;
 
 import static calendar.PrintToConsole.parseDate;
 import static java.lang.Integer.parseInt;
@@ -16,36 +18,40 @@ public class Run {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        System.out.println("Use default calendar ? 1 - Yes , 2 - No :");
 
-//        int firstDay = scanner.nextInt();
-        System.out.println("Enter start day index: 1- Mon... 7 - Sun");
-        int firstDay = scanner.nextInt();
-
-        List weekends = getWeekends(scanner);
-//        List weekends = Arrays.asList(6,7);
-        System.out.print("Please enter year: ");
-        String year = scanner.nextLine();
-        System.out.print("Please enter month: ");
-        String month = scanner.nextLine();
-        System.out.print("Please enter day: ");
-        String day = scanner.nextLine();
-
-        try {
-            parseDate(parseInt(year), parseInt(month), parseInt(day), weekends, firstDay);
-        } catch (Exception e) {
+        if (parseInt(scanner.nextLine()) == 1) {
             parseDate(now().getYear(), now().getMonth().getValue(),
-                    now().getDayOfMonth(), weekends, firstDay);
+                    now().getDayOfMonth(), getWeekends(""), 0);
+        } else {
+            System.out.println("Enter start day index: 1- Mon... 7 - Sun");
+            int firstDay = getFirsDayOfWeek(scanner.nextLine());
+
+            System.out.println("Please enter weekends, example: 1,2,3");
+            List<Integer> weekends = getWeekends(scanner.nextLine());
+
+            System.out.println("Please enter year: ");
+            String year = scanner.nextLine();
+            System.out.println("Please enter month: ");
+            String month = scanner.nextLine();
+            System.out.println("Please enter day: ");
+            String day = scanner.nextLine();
+            parseDate(parseInt(year), parseInt(month), parseInt(day), weekends, firstDay);
         }
     }
 
-    private static List getWeekends(Scanner scanner) {
-        List<Integer> list = new ArrayList<>();
-        System.out.println("Please enter weekends, press 0 to finish");
-        for (; ; ) {
-            int value = scanner.nextInt();
-            if (value == 0) break;
-            list.add(value);
+    private static List<Integer> getWeekends(String weekends) {
+        List<Integer> listWeekends = new ArrayList<>();
+        if (weekends.isEmpty()) {
+            return Arrays.asList(DayOfWeek.SATURDAY.getValue(), DayOfWeek.SUNDAY.getValue());
         }
-        return list;
+        for (String s : weekends.split(",")) {
+            listWeekends.add(parseInt(s));
+        }
+        return listWeekends;
+    }
+
+    public static int getFirsDayOfWeek(String day) {
+        return day.isEmpty() ? 0 : parseInt(day);
     }
 }
