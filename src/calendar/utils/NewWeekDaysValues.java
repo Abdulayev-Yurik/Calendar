@@ -33,7 +33,7 @@ public class NewWeekDaysValues extends CalendarUtils {
         if (dayValue == currentDay) {
             return CalendarUtils.toThisDayColor(day);
         } else if (CalendarUtils.isWeekend( getNumberDayOfWeek(numberDay) , weekends)) {
-            return CalendarUtils.toWeekendColor(setTypeDay(Integer.toString(dayValue)));
+            return CalendarUtils.toWeekendConsoleColor(setTypeDay(Integer.toString(dayValue)));
         } else {
             return setTypeDay(Integer.toString(dayValue));
         }

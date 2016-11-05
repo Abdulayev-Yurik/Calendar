@@ -47,7 +47,7 @@ public class WeekDaysValues extends CalendarUtils{
         if (dayValue == thisDay) {
             return CalendarUtils.toThisDayColor(day);
 //        } else if (CalendarUtils.isWeekend(numberDay, weekends)) {
-//            return CalendarUtils.toWeekendColor(getNumberDay(Integer.toString(dayValue)));
+//            return CalendarUtils.toWeekendConsoleColor(getNumberDay(Integer.toString(dayValue)));
         } else {
             return getNumberDay(Integer.toString(dayValue));
         }

@@ -15,11 +15,11 @@ public class CalendarUtils {
     protected static final int MAX_WEEKS = 6;
 
 
-    static boolean isWeekend(int dayOfWeek, List weekends){
+    public static boolean isWeekend(int dayOfWeek, List weekends){
         return weekends.contains(dayOfWeek);
     }
 
-    static String toWeekendColor(String value){
+    public static String toWeekendConsoleColor(String value){
         return ANSI_RED + value + ANSI_RESET;
     }
 
