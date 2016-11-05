@@ -2,8 +2,8 @@ package calendar.utils;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.time.DayOfWeek;
 import java.time.format.TextStyle;
-import java.time.temporal.WeekFields;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -13,22 +13,19 @@ import java.util.Locale;
  */
 public class WeekdaysName extends CalendarUtils {
 
-    public static List<String> getWeekdaysName(Locale locale, int dayValue) {
-        List<String> names = new ArrayList<>();
+    public static List<DayOfWeek> getWeekdays(int startDayIndex) {
+        List<DayOfWeek> names = new ArrayList<>();
         for (int numberDay = 1; numberDay <= DAYS_IN_WEEK; numberDay++) {
-            String formatName = String.format(TYPICAL_STRING_FORMAT, getDayValue(locale, dayValue - 1));
-            names.add(formatName);
-            dayValue = nextDay(dayValue);
+            names.add(DayOfWeek.of(startDayIndex));
+            startDayIndex = CalendarUtils.nextDay(startDayIndex);
         }
         return names;
     }
 
     @NotNull
-    private static String getDayValue(Locale locale, int numberDay) {
-        return WeekFields.of(Locale.UK)
-                .getFirstDayOfWeek()
-                .plus(numberDay)
-                .getDisplayName(TextStyle.SHORT, locale)
+    public static String getDayValue(DayOfWeek dayOfWeek) {
+        return dayOfWeek
+                .getDisplayName(TextStyle.SHORT, Locale.UK)
                 .toUpperCase();
     }
 }
