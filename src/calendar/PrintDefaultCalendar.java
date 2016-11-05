@@ -12,7 +12,7 @@ import java.util.Locale;
 /**
  * Created by yurik on 01.09.16.
  */
-class PrintToConsole {
+class PrintDefaultCalendar {
 
     private static final int MAX_WEEKS = 6;
 
