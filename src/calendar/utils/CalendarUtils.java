@@ -24,11 +24,11 @@ public class CalendarUtils {
         return ANSI_RED + value + ANSI_RESET;
     }
 
-    public static String toThisDayColor(String value){
+    public static String toThisDayConsoleColor(String value){
         return ANSI_CYAN + value + ANSI_RESET;
     }
 
-     public static String toAnotherMonthColor(String value){
+     public static String toAnotherMonthConsoleColor(String value){
         return ANSI_YELLOW + value + ANSI_RESET;
     }
 
@@ -42,5 +42,22 @@ public class CalendarUtils {
 
     public static String getFormattedDay(String numberDay) {
         return String.format(CalendarUtils.TYPICAL_STRING_FORMAT, numberDay);
+    }
+
+    public static int getValue(int firstDay, int customFirstDay){
+        if (firstDay ==  customFirstDay) return 0;
+        return firstDay > customFirstDay ? firstDay - 1 : 7 - (customFirstDay - firstDay);
+    }
+
+    public static String toWeekendWebColor(String dayName) {
+        return "<td class=\"weekend\">" + dayName + "</td>";
+    }
+
+    public static String toAnotherMonthWebColor(String formattedDay) {
+        return "<td class=\"anotherMonthColor\">" + formattedDay + "</td>";
+    }
+
+    public static String toThisDayWebColor(String formattedDay) {
+        return "<td class=\"currentDay\">" + formattedDay + "</td>";
     }
 }

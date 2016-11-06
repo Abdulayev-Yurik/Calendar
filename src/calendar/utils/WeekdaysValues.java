@@ -3,7 +3,7 @@ package calendar.utils;
 /**
  * Created by employee on 11/3/16.
  */
-public class WeekDaysValues extends CalendarUtils{
+public class WeekdaysValues extends CalendarUtils{
 
     public static String getWeekDays(int firstDayOfWeek,
                                      int monthLength) {
@@ -28,7 +28,7 @@ public class WeekDaysValues extends CalendarUtils{
 //    private static String getColorDay(int numberDay, int dayValue, int thisDay, List weekends) {
 //        String day = getFormattedDay(Integer.toString(dayValue));
 //        if (dayValue == thisDay) {
-//            return CalendarUtils.toThisDayColor(day);
+//            return CalendarUtils.toThisDayConsoleColor(day);
 ////        } else if (CalendarUtils.isWeekend(numberDay, weekends)) {
 ////            return CalendarUtils.toWeekendConsoleColor(getFormattedDay(Integer.toString(dayValue)));
 //        } else {

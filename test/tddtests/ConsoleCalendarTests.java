@@ -1,6 +1,6 @@
 package tddtests;
 
-import calendar.utils.WeekDaysValues;
+import calendar.utils.WeekdaysValues;
 import org.junit.Test;
 
 import java.time.DayOfWeek;
@@ -15,11 +15,11 @@ public class ConsoleCalendarTests {
 
     @Test
     public void getCountWeeks(){
-        assertThat(5, is(WeekDaysValues.getWeekDays(2, 30)));
+        assertThat(5, is(WeekdaysValues.getWeekDays(2, 30)));
     }
 
     @Test
     public void notEmptyElemnts(){
-        assertThat(DayOfWeek.SUNDAY.plus(1), is(WeekDaysValues.getDays(30)));
+        assertThat(DayOfWeek.SUNDAY.plus(1), is(WeekdaysValues.getDays(30)));
     }
 }

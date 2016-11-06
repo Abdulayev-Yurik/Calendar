@@ -1,5 +1,6 @@
 package calendar.interfacec;
 
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -7,5 +8,5 @@ import java.util.List;
  */
 public interface Calendar {
 
-    void print(int startWithCustomDay, List<Integer> weekends);
+    void print(int startWithCustomDay, LocalDate currentDate, List<Integer> weekends);
 }
