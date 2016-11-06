@@ -15,9 +15,10 @@ public class WeekdaysName extends CalendarUtils {
 
     public static List<DayOfWeek> getWeekdays(int startDayIndex) {
         List<DayOfWeek> names = new ArrayList<>();
+        DayOfWeek dayOfWeek = DayOfWeek.of(startDayIndex);
         for (int numberDay = 1; numberDay <= DAYS_IN_WEEK; numberDay++) {
-            names.add(DayOfWeek.of(startDayIndex));
-            startDayIndex = CalendarUtils.nextDay(startDayIndex);
+            names.add(dayOfWeek);
+            dayOfWeek = dayOfWeek.plus(1);
         }
         return names;
     }

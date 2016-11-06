@@ -1,60 +1,41 @@
 package calendar.utils;
 
-import java.util.List;
-import java.util.Locale;
-
 /**
  * Created by employee on 11/3/16.
  */
 public class WeekDaysValues extends CalendarUtils{
 
-    public static String getWeekDays(int numberWeek, int firstDayOfWeek,
-                                     int monthLength, int thisDay, Locale locale, List weekends) {
-        if (numberWeek == 0) {
-            return getFirstWeek(firstDayOfWeek, thisDay, weekends);
-        } else {
-            return getAnotherWeek(7 * (numberWeek) - firstDayOfWeek + 2, thisDay, weekends, monthLength);
-        }
+    public static String getWeekDays(int firstDayOfWeek,
+                                     int monthLength) {
+        getDays(monthLength);
+
+        return null;
     }
 
-    private static String getAnotherWeek(int firstDayOfWeek, int thisDay, List weekends, int monthLength) {
-        StringBuilder builder = new StringBuilder();
-        int counter = firstDayOfWeek;
-        for (int numberDay = 1; numberDay <= DAYS_IN_WEEK; numberDay++) {
-            if (counter > monthLength) break;
-            builder.append(getColorDay(numberDay, counter, thisDay, weekends));
-            counter++;
+    public static String[] getDays(int monthLength) {
+        String[] days = new String[monthLength];
+        for (int day = 1; day <= days.length; day++) {
+            days[day - 1] = day + "";
         }
-        return builder.toString();
+        return days;
     }
 
-    private static String getFirstWeek(int firstDayOfWeek, int thisDay, List weekends) {
-        StringBuilder builder = new StringBuilder();
-        int counter = 1;
-        for (int numberDay = 1; numberDay <= DAYS_IN_WEEK; numberDay++) {
-            if (numberDay >= firstDayOfWeek) {
-                builder.append(getColorDay(numberDay, counter, thisDay, weekends));
-                counter++;
-            } else {
-                builder.append(getNumberDay(""));
-            }
-        }
-        return builder.toString();
+    private static boolean isThisMonth(int firstDayOfWeek, int monthLength, int day) {
+        return day > firstDayOfWeek && day - firstDayOfWeek <= monthLength;
     }
 
-    private static String getColorDay(int numberDay, int dayValue, int thisDay, List weekends) {
-        String day = getNumberDay(Integer.toString(dayValue));
-        if (dayValue == thisDay) {
-            return CalendarUtils.toThisDayColor(day);
-//        } else if (CalendarUtils.isWeekend(numberDay, weekends)) {
-//            return CalendarUtils.toWeekendConsoleColor(getNumberDay(Integer.toString(dayValue)));
-        } else {
-            return getNumberDay(Integer.toString(dayValue));
-        }
-    }
 
-    private static String getNumberDay(String numberDay) {
-        return String.format(CalendarUtils.TYPICAL_STRING_FORMAT, numberDay);
-    }
+//    private static String getColorDay(int numberDay, int dayValue, int thisDay, List weekends) {
+//        String day = getFormattedDay(Integer.toString(dayValue));
+//        if (dayValue == thisDay) {
+//            return CalendarUtils.toThisDayColor(day);
+////        } else if (CalendarUtils.isWeekend(numberDay, weekends)) {
+////            return CalendarUtils.toWeekendConsoleColor(getFormattedDay(Integer.toString(dayValue)));
+//        } else {
+//            return getFormattedDay(Integer.toString(dayValue));
+//        }
+//    }
+
+
 
 }

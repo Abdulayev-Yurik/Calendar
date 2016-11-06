@@ -11,6 +11,7 @@ public class CalendarUtils {
     private static final String ANSI_RESET = "\u001B[0m";
     private static final String ANSI_RED = "\u001B[31m";
     private static final String ANSI_CYAN = "\u001B[36m";
+    private static final String ANSI_YELLOW = "\u001B[33m";
     static final int DAYS_IN_WEEK = 7;
     protected static final int MAX_WEEKS = 6;
 
@@ -23,8 +24,12 @@ public class CalendarUtils {
         return ANSI_RED + value + ANSI_RESET;
     }
 
-    static String toThisDayColor(String value){
+    public static String toThisDayColor(String value){
         return ANSI_CYAN + value + ANSI_RESET;
+    }
+
+     public static String toAnotherMonthColor(String value){
+        return ANSI_YELLOW + value + ANSI_RESET;
     }
 
     static int nextDay(int value) {
@@ -32,7 +37,10 @@ public class CalendarUtils {
     }
 
     public static int backDay(int value) {
-        int[] a = {2,1,7,6,5,4,3};
-        return a[value];
+        return value == 1 ? 7 : --value;
+    }
+
+    public static String getFormattedDay(String numberDay) {
+        return String.format(CalendarUtils.TYPICAL_STRING_FORMAT, numberDay);
     }
 }

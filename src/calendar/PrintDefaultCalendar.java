@@ -16,7 +16,7 @@ class PrintDefaultCalendar {
 
     PrintDefaultCalendar(){
         List<Integer> weekends = Arrays.asList(DayOfWeek.SATURDAY.getValue(), DayOfWeek.SUNDAY.getValue(), DayOfWeek.MONDAY.getValue());
-        int startWithDefaultDay = DayOfWeek.MONDAY.getValue();
+        int startWithDefaultDay = DayOfWeek.TUESDAY.getValue();
 
         Calendar calendar = null;
         System.out.print("Enter print mode, 1-Console, 2-WEB page");
@@ -53,7 +53,7 @@ class PrintDefaultCalendar {
 //    private static String generateView(int monthLength, int firstDayInWeek,
 //                                       int currentDay, List weekends, int customFirstDay) {
 //        StringBuilder builder = new StringBuilder();
-//        builder.append(new WeekdaysName().getWeekdaysName(Locale.UK, weekends, firstDayInWeek)).append("\n");
+//        builder.append(new WeekdaysName().getWeekdays(Locale.UK, weekends, firstDayInWeek)).append("\n");
 ////        for (int numberWeek = 0; numberWeek < MAX_WEEKS; numberWeek++) {
 ////            int v = CalendarUtils.backDay(customFirstDay - 1);                  // FIXME: 11/3/16 not correct
 ////            builder.append(WeekDaysValues.getWeekDays(numberWeek, v, monthLength,
