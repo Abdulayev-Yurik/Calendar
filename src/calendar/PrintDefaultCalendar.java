@@ -16,7 +16,7 @@ class PrintDefaultCalendar {
 
     PrintDefaultCalendar(){
         List<Integer> weekends = Arrays.asList(DayOfWeek.SATURDAY.getValue(), DayOfWeek.SUNDAY.getValue(), DayOfWeek.MONDAY.getValue());
-        int startWithDefaultDay = DayOfWeek.TUESDAY.getValue();
+        int startWithDefaultDay = DayOfWeek.MONDAY.getValue();
 
         Calendar calendar = null;
         System.out.print("Enter print mode, 1-Console, 2-WEB page");

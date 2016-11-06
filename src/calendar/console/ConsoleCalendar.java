@@ -47,7 +47,7 @@ public class ConsoleCalendar implements Calendar {
 //        int divider = thisDate.getDayOfWeek().
 //        String[] days = WeekDaysValues.getDays(monthLength);
         int before = getValue(firstDayOfWeek, startWeekendOfDay);
-        for (int i = before - 1; i > 0; i--) {
+        for (int i = before; i > 0; i--) {
             String formattedDay = WeekDaysValues.getFormattedDay(
                     CalendarUtils.getFormattedDay(thisDate.minusDays(i).getDayOfMonth() + ""));
             days.append(CalendarUtils.toAnotherMonthColor(formattedDay));
@@ -71,7 +71,8 @@ public class ConsoleCalendar implements Calendar {
     }
 
     private int getValue(int firstDay, int customFirstDay){
-        return firstDay >= customFirstDay ? firstDay : 7 - (customFirstDay - firstDay);
+        if (firstDay ==  customFirstDay) return 0;
+        return firstDay > customFirstDay ? firstDay - 1 : 7 - (customFirstDay - firstDay);
     }
 
     private String getWeekNames(int startWeekendOfDay, List<Integer> weekends) {
