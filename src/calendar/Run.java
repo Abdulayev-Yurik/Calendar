@@ -1,5 +1,8 @@
 package calendar;
 
+import calendar.printing.PrintCustomCalendar;
+import calendar.printing.PrintDefaultCalendar;
+
 import java.util.Scanner;
 
 /**

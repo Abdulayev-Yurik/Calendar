@@ -1,7 +1,7 @@
-package calendar;
+package calendar.printing;
 
 import calendar.console.ConsoleCalendar;
-import calendar.interfacec.Calendar;
+import calendar.interfaces.Calendar;
 import calendar.web.WebCalendar;
 
 import java.time.DayOfWeek;
@@ -18,7 +18,7 @@ import static java.lang.Integer.parseInt;
  */
 public class PrintCustomCalendar {
 
-    PrintCustomCalendar(){
+    public PrintCustomCalendar(){
         innitCustomCalendar();
     }
 
@@ -36,7 +36,7 @@ public class PrintCustomCalendar {
         System.out.println("Enter custom start day of week : ");
         int customStartDay = getFirsDayOfWeek(scanner.nextInt());
         System.out.println("Enter weekends: 1,2,3");
-        List<Integer> weekends = getWeekends(scanner.nextLine());
+        List<Integer> weekends = getWeekends(new Scanner(System.in).nextLine());
         switch (type) {
             case 1:
                 calendar = new ConsoleCalendar();
@@ -61,7 +61,7 @@ public class PrintCustomCalendar {
         return listWeekends;
     }
 
-    public static int getFirsDayOfWeek(int day) {
+    private static int getFirsDayOfWeek(int day) {
         return day > 0 && day <= 7 ? day : DayOfWeek.MONDAY.getValue();
     }
 }

@@ -1,6 +1,6 @@
 package calendar.web;
 
-import calendar.interfacec.Calendar;
+import calendar.interfaces.Calendar;
 import calendar.utils.CalendarUtils;
 import calendar.utils.WeekdaysName;
 import calendar.utils.WeekdaysValues;
@@ -48,7 +48,7 @@ public class WebCalendar implements Calendar {
         DayOfWeek dayOfWeek = thisDate.getDayOfWeek();
         StringBuilder days = new StringBuilder();
         days.append("<tr>\n");
-        int before = CalendarUtils.getValue(firstDayOfWeek, startWithCustomDay);
+        int before = CalendarUtils.getBeforeValue(thisDate, startWithCustomDay);
         for (int i = before; i > 0; i--) {
             String formattedDay = WeekdaysValues.getFormattedDay(
                     CalendarUtils.getFormattedDay(thisDate.minusDays(i).getDayOfMonth() + ""));
@@ -61,12 +61,18 @@ public class WebCalendar implements Calendar {
             }else if (CalendarUtils.isWeekend(dayOfWeek.getValue(), weekends)){
                 days.append(CalendarUtils.toWeekendWebColor(formattedDay));
             }else {
-                days.append("<td>" + formattedDay + "</td>");
+                days.append("<td>").append(formattedDay).append("</td>");
             }
             if (dayOfWeek.getValue() == CalendarUtils.backDay(startWithCustomDay)){
-                days.append("</tr>\n<tr>\n");
+                days.append("\n</tr>\n<tr>\n");
             }
             dayOfWeek = dayOfWeek.plus(1);
+        }
+        for (int day = 1; dayOfWeek.getValue() != DayOfWeek.of(startWithCustomDay).getValue();
+             dayOfWeek = dayOfWeek.plus(1) , day++){
+            String formattedDay = WeekdaysValues.getFormattedDay(
+                    CalendarUtils.getFormattedDay(day + ""));
+            days.append(CalendarUtils.toAnotherMonthWebColor(formattedDay));
         }
         days.append("</tr>");
         return days.toString();

@@ -1,4 +1,4 @@
-package calendar.interfacec;
+package calendar.interfaces;
 
 import java.time.LocalDate;
 import java.util.List;

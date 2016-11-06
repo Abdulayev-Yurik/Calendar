@@ -1,6 +1,6 @@
 package calendar.console;
 
-import calendar.interfacec.Calendar;
+import calendar.interfaces.Calendar;
 import calendar.utils.CalendarUtils;
 import calendar.utils.WeekdaysValues;
 import calendar.utils.WeekdaysName;
@@ -42,7 +42,7 @@ public class ConsoleCalendar implements Calendar {
                                   int firstDayOfWeek, int startWeekendOfDay, int currentDay, List<Integer> weekends) {
         DayOfWeek dayOfWeek = thisDate.getDayOfWeek();
         StringBuilder days = new StringBuilder();
-        int before = CalendarUtils.getValue(firstDayOfWeek, startWeekendOfDay);
+        int before = CalendarUtils.getBeforeValue(thisDate, startWeekendOfDay);
         for (int i = before; i > 0; i--) {
             String formattedDay = WeekdaysValues.getFormattedDay(
                     CalendarUtils.getFormattedDay(thisDate.minusDays(i).getDayOfMonth() + ""));
@@ -62,7 +62,12 @@ public class ConsoleCalendar implements Calendar {
             }
             dayOfWeek = dayOfWeek.plus(1);
         }
-
+        for (int day = 1; dayOfWeek.getValue() != DayOfWeek.of(startWeekendOfDay).getValue();
+             dayOfWeek = dayOfWeek.plus(1) , day++){
+            String formattedDay = WeekdaysValues.getFormattedDay(
+                    CalendarUtils.getFormattedDay(day + ""));
+            days.append(CalendarUtils.toAnotherMonthConsoleColor(formattedDay));
+        }
         return days.toString();
     }
 

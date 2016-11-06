@@ -1,5 +1,6 @@
 package calendar.utils;
 
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -28,12 +29,8 @@ public class CalendarUtils {
         return ANSI_CYAN + value + ANSI_RESET;
     }
 
-     public static String toAnotherMonthConsoleColor(String value){
+    public static String toAnotherMonthConsoleColor(String value){
         return ANSI_YELLOW + value + ANSI_RESET;
-    }
-
-    static int nextDay(int value) {
-        return value == 7 ? 1 : ++value;
     }
 
     public static int backDay(int value) {
@@ -44,9 +41,9 @@ public class CalendarUtils {
         return String.format(CalendarUtils.TYPICAL_STRING_FORMAT, numberDay);
     }
 
-    public static int getValue(int firstDay, int customFirstDay){
-        if (firstDay ==  customFirstDay) return 0;
-        return firstDay > customFirstDay ? firstDay - 1 : 7 - (customFirstDay - firstDay);
+    public static int getBeforeValue(LocalDate localDate, int customFirstDay) {
+        return localDate.getDayOfWeek().getValue() == customFirstDay ?
+                7 - localDate.minusDays(1).getDayOfMonth() : getBeforeValue(localDate.plusDays(1), customFirstDay);
     }
 
     public static String toWeekendWebColor(String dayName) {
