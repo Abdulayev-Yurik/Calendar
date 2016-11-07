@@ -16,59 +16,62 @@ import java.util.List;
 public class ConsoleCalendar implements Calendar {
 
     private LocalDate thisDate;
-    private final List<DayOfWeek> weekends = Arrays.asList(DayOfWeek.SATURDAY, DayOfWeek.SUNDAY);
+    private DayOfWeek startWeek;
+    private List<DayOfWeek> weekend;
 
     public ConsoleCalendar() {
         this(LocalDate.now());
     }
 
     public ConsoleCalendar(LocalDate thisDate) {
-        this(thisDate, );
-        this.thisDate = thisDate;
+        this(thisDate, DayOfWeek.MONDAY);
     }
 
-    public ConsoleCalendar(LocalDate thisDate, List<DayOfWeek> weekends){
+    public ConsoleCalendar(LocalDate thisDate, DayOfWeek startWeek){
+        this(thisDate, startWeek, Arrays.asList(DayOfWeek.SATURDAY, DayOfWeek.SUNDAY));
+    }
+
+    public ConsoleCalendar(LocalDate thisDate, DayOfWeek startWeek, List<DayOfWeek> weekend) {
         this.thisDate = thisDate;
-        this.weekends = weekends;
+        this.startWeek = startWeek;
+        this.weekend = weekend;
     }
 
     @Override
-    public void print(int startWithCustomDay, LocalDate currentDate, List<Integer> listWeekends) {
-        weekends = listWeekends;
-        parseDate(startWithCustomDay, currentDate);
+    public void print(LocalDate currentDate) {
+        parseDate(currentDate);
     }
 
-    private void parseDate(int startWithCustomDay, LocalDate date) {
+    private void parseDate(LocalDate date) {
         thisDate = LocalDate.of(date.getYear(),
                 date.getMonth().getValue(), 1);
 
-        System.out.println(generateView(date.getDayOfMonth(), startWithCustomDay));
+        System.out.println(generateView(date.getDayOfMonth()));
     }
 
-    private String generateView(int currentDay,
-                                int startWeekendOfDay) {
+    private String generateView(int currentDay) {
         StringBuilder view = new StringBuilder();
-        view.append(getWeekNames(startWeekendOfDay));
+        view.append(getWeekNames());
         view.append("\n");
-        view.append(getMonthValues(startWeekendOfDay, currentDay));
+        view.append(getMonthValues(currentDay));
         return view.toString();
     }
 
-    private String getMonthValues(int startWeekendOfDay, int currentDay) {
+    private String getMonthValues(int currentDay) {
         DayOfWeek dayOfWeek = thisDate.getDayOfWeek();
         return new StringBuilder()
-                .append(WeekdaysValues.getPreviousMonthDays(thisDate, startWeekendOfDay, CalendarUtils.CONSOLE_VIEW))
-                .append(WeekdaysValues.getMonthValues(thisDate, currentDay, dayOfWeek, weekends,
-                        startWeekendOfDay, CalendarUtils.CONSOLE_VIEW))
-                .append(WeekdaysValues.getNextMonthDays(startWeekendOfDay, CalendarUtils.CONSOLE_VIEW))
+                .append(WeekdaysValues.getPreviousMonthDays(thisDate, startWeek, CalendarUtils.CONSOLE_VIEW))
+                .append(WeekdaysValues.getMonthValues(thisDate, currentDay, dayOfWeek, weekend,
+                        startWeek, CalendarUtils.CONSOLE_VIEW))
+                .append(WeekdaysValues.getNextMonthDays(startWeek, CalendarUtils.CONSOLE_VIEW))
                 .toString();
     }
 
-    private String getWeekNames(int startWeekendOfDay) {
+    private String getWeekNames() {
         StringBuilder builder = new StringBuilder();
-        for (DayOfWeek dayOfWeek : WeekdaysName.getWeekdays(startWeekendOfDay)) {
+        for (DayOfWeek dayOfWeek : WeekdaysName.getWeekdays(startWeek.getValue())) {
             String dayName = CalendarUtils.getFormattedDay(WeekdaysName.getDayValue(dayOfWeek));
-            builder.append(CalendarUtils.isWeekend(dayOfWeek.getValue(), weekends) ?
+            builder.append(CalendarUtils.isWeekend(dayOfWeek.getValue(), weekend) ?
                     CalendarUtils.toWeekendColor(dayName, CalendarUtils.CONSOLE_VIEW) : dayName);
         }
         return builder.toString();

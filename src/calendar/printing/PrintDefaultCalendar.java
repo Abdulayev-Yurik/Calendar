@@ -16,7 +16,6 @@ import java.util.Scanner;
 public class PrintDefaultCalendar {
 
     public PrintDefaultCalendar(){
-        List<Integer> weekends = Arrays.asList(DayOfWeek.SATURDAY.getValue(), DayOfWeek.SUNDAY.getValue());
         int startWithDefaultDay = DayOfWeek.MONDAY.getValue();
 
         Calendar calendar = null;
@@ -30,7 +29,7 @@ public class PrintDefaultCalendar {
                 break;
         }
         if (calendar != null){
-            calendar.print(startWithDefaultDay, LocalDate.now(), weekends);
+            calendar.print(startWithDefaultDay, LocalDate.now());
         }
     }
 

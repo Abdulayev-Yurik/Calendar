@@ -8,5 +8,5 @@ import java.util.List;
  */
 public interface Calendar {
 
-    void print(int startWithCustomDay, LocalDate currentDate, List<Integer> weekends);
+    void print(LocalDate currentDate);
 }
