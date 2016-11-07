@@ -47,12 +47,8 @@ public class WebCalendar implements Calendar {
         DayOfWeek dayOfWeek = thisDate.getDayOfWeek();
         StringBuilder days = new StringBuilder();
         days.append("<tr>\n");
-        int before = CalendarUtils.getBeforeValue(thisDate, startWithCustomDay);
-        for (int i = before; i > 0; i--) {
-            String formattedDay = WeekdaysValues.getFormattedDay(
-                    CalendarUtils.getFormattedDay(thisDate.minusDays(i).getDayOfMonth() + ""));
-            days.append(CalendarUtils.toAnotherMonthWebColor(formattedDay));
-        }
+        days.append(WeekdaysValues.getPreviousMonthDays(thisDate, startWithCustomDay, CalendarUtils.WEB_VIEW));
+
         for (int numberDay = 1; numberDay <= thisDate.getMonth().length(thisDate.isLeapYear()); numberDay++) {
             String formattedDay = CalendarUtils.getFormattedDay(numberDay + "");
             if (numberDay == currentDay) {
@@ -67,12 +63,7 @@ public class WebCalendar implements Calendar {
             }
             dayOfWeek = dayOfWeek.plus(1);
         }
-        for (int day = 1; dayOfWeek.getValue() != DayOfWeek.of(startWithCustomDay).getValue();
-             dayOfWeek = dayOfWeek.plus(1) , day++){
-            String formattedDay = WeekdaysValues.getFormattedDay(
-                    CalendarUtils.getFormattedDay(day + ""));
-            days.append(CalendarUtils.toAnotherMonthWebColor(formattedDay));
-        }
+        days.append(WeekdaysValues.getNextMonthDays(startWithCustomDay, dayOfWeek, CalendarUtils.WEB_VIEW));
         days.append("</tr>");
         return days.toString();
     }

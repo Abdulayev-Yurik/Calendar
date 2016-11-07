@@ -2,6 +2,7 @@ package calendar.utils;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by employee on 11/2/16.
@@ -13,6 +14,8 @@ public class CalendarUtils {
     private static final String ANSI_RED = "\u001B[31m";
     private static final String ANSI_CYAN = "\u001B[36m";
     private static final String ANSI_YELLOW = "\u001B[33m";
+    public static final String WEB_VIEW = "web";
+    public static final String CONSOLE_VIEW = "console";
     static final int DAYS_IN_WEEK = 7;
     protected static final int MAX_WEEKS = 6;
 
@@ -31,6 +34,15 @@ public class CalendarUtils {
 
     public static String toAnotherMonthConsoleColor(String value){
         return ANSI_YELLOW + value + ANSI_RESET;
+    }
+
+    public static String toAnotherMonthColor(String value, String type){
+        if (type.equals(WEB_VIEW))
+            return "<td class=\"anotherMonthColor\">" + value + "</td>";
+        else if (type.equals(CONSOLE_VIEW))
+            return ANSI_YELLOW + value + ANSI_RESET;
+        else
+            return value;
     }
 
     public static int backDay(int value) {

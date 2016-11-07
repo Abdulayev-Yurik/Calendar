@@ -39,32 +39,23 @@ public class ConsoleCalendar implements Calendar {
     private String getMonthValues(LocalDate thisDate, int startWeekendOfDay, int currentDay, List<Integer> weekends) {
         DayOfWeek dayOfWeek = thisDate.getDayOfWeek();
         StringBuilder days = new StringBuilder();
-        int before = CalendarUtils.getBeforeValue(thisDate, startWeekendOfDay);
-        for (int i = before; i > 0; i--) {
-            String formattedDay = WeekdaysValues.getFormattedDay(
-                    CalendarUtils.getFormattedDay(thisDate.minusDays(i).getDayOfMonth() + ""));
-            days.append(CalendarUtils.toAnotherMonthConsoleColor(formattedDay));
-        }
+        days.append(WeekdaysValues.getPreviousMonthDays(thisDate, startWeekendOfDay, CalendarUtils.CONSOLE_VIEW));
+
         for (int numberDay = 1; numberDay <= thisDate.getMonth().length(thisDate.isLeapYear()); numberDay++) {
             String formattedDay = CalendarUtils.getFormattedDay(numberDay + "");
             if (numberDay == currentDay) {
                 days.append(CalendarUtils.toThisDayConsoleColor(formattedDay));
-            }else if (CalendarUtils.isWeekend(dayOfWeek.getValue(), weekends)){
+            } else if (CalendarUtils.isWeekend(dayOfWeek.getValue(), weekends)) {
                 days.append(CalendarUtils.toWeekendConsoleColor(formattedDay));
-            }else {
+            } else {
                 days.append(formattedDay);
             }
-            if (dayOfWeek.getValue() == CalendarUtils.backDay(startWeekendOfDay)){
+            if (dayOfWeek.getValue() == CalendarUtils.backDay(startWeekendOfDay)) {
                 days.append("\n");
             }
             dayOfWeek = dayOfWeek.plus(1);
         }
-        for (int day = 1; dayOfWeek.getValue() != DayOfWeek.of(startWeekendOfDay).getValue();
-             dayOfWeek = dayOfWeek.plus(1) , day++){
-            String formattedDay = WeekdaysValues.getFormattedDay(
-                    CalendarUtils.getFormattedDay(day + ""));
-            days.append(CalendarUtils.toAnotherMonthConsoleColor(formattedDay));
-        }
+        days.append(WeekdaysValues.getNextMonthDays(startWeekendOfDay, dayOfWeek, CalendarUtils.WEB_VIEW));
         return days.toString();
     }
 
