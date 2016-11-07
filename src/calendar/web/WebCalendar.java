@@ -5,7 +5,10 @@ import calendar.utils.CalendarUtils;
 import calendar.utils.WeekdaysName;
 import calendar.utils.WeekdaysValues;
 
+import java.awt.*;
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -25,17 +28,14 @@ public class WebCalendar implements Calendar {
         LocalDate thisDate = LocalDate.of(date.getYear(),
                 date.getMonth().getValue(), 1);
 
-        int firstDayOfWeek = thisDate.getDayOfWeek().getValue();
-
-        buildCalendar(thisDate, date.getDayOfMonth(), firstDayOfWeek, startWithCustomDay, weekends);
+        buildCalendar(thisDate, date.getDayOfMonth(), startWithCustomDay, weekends);
     }
 
-    private void buildCalendar(LocalDate thisDate, int currentDay, int firstDayOfWeek, int startWithCustomDay, List<Integer> weekends) {
+    private void buildCalendar(LocalDate thisDate, int currentDay, int startWithCustomDay, List<Integer> weekends) {
         try (PrintWriter writer = new PrintWriter("calendar.html")) {
             writer.println(getHTMLHeader());
             writer.println(getWeekends(startWithCustomDay, weekends));
-            writer.println(getBody(thisDate,
-            firstDayOfWeek, startWithCustomDay, currentDay, weekends));
+            writer.println(getBody(thisDate, startWithCustomDay, currentDay, weekends));
             writer.println(getHTMLFooter());
 
         } catch (FileNotFoundException e) {
@@ -43,8 +43,7 @@ public class WebCalendar implements Calendar {
         }
     }
 
-    private String getBody(LocalDate thisDate, int firstDayOfWeek,
-                           int startWithCustomDay, int currentDay, List<Integer> weekends) {
+    private String getBody(LocalDate thisDate, int startWithCustomDay, int currentDay, List<Integer> weekends) {
         DayOfWeek dayOfWeek = thisDate.getDayOfWeek();
         StringBuilder days = new StringBuilder();
         days.append("<tr>\n");

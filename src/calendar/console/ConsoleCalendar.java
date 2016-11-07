@@ -23,23 +23,20 @@ public class ConsoleCalendar implements Calendar {
         LocalDate thisDate = LocalDate.of(date.getYear(),
                 date.getMonth().getValue(), 1);
 
-        int firstDayOfWeek = thisDate.getDayOfWeek().getValue();
-
-        System.out.println(generateView(firstDayOfWeek, thisDate,
+        System.out.println(generateView(thisDate,
                 date.getDayOfMonth(), startWithCustomDay, weekends));
     }
 
-    private String generateView(int firstDayOfWeek, LocalDate thisDate, int currentDay,
+    private String generateView(LocalDate thisDate, int currentDay,
                                 int startWeekendOfDay, List<Integer> weekends) {
         StringBuilder view = new StringBuilder();
         view.append(getWeekNames(startWeekendOfDay, weekends));
         view.append("\n");
-        view.append(getMonthValues(thisDate, firstDayOfWeek, startWeekendOfDay, currentDay, weekends));
+        view.append(getMonthValues(thisDate, startWeekendOfDay, currentDay, weekends));
         return view.toString();
     }
 
-    private String getMonthValues(LocalDate thisDate,
-                                  int firstDayOfWeek, int startWeekendOfDay, int currentDay, List<Integer> weekends) {
+    private String getMonthValues(LocalDate thisDate, int startWeekendOfDay, int currentDay, List<Integer> weekends) {
         DayOfWeek dayOfWeek = thisDate.getDayOfWeek();
         StringBuilder days = new StringBuilder();
         int before = CalendarUtils.getBeforeValue(thisDate, startWeekendOfDay);
