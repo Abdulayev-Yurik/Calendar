@@ -19,23 +19,30 @@ import java.util.List;
  */
 public class WebCalendar implements Calendar {
 
-    @Override
-    public void print(int startWithCustomDay, LocalDate date, List<Integer> weekends) {
-        parseDate(startWithCustomDay, date, weekends);
+    private static List<Integer> weekends;
+
+    public WebCalendar(){
+
     }
 
-    private void parseDate(int startWithCustomDay, LocalDate date, List<Integer> weekends) {
+    @Override
+    public void print(int startWithCustomDay, LocalDate date, List<Integer> listWeekends) {
+        weekends = listWeekends;
+        parseDate(startWithCustomDay, date);
+    }
+
+    private void parseDate(int startWithCustomDay, LocalDate date) {
         LocalDate thisDate = LocalDate.of(date.getYear(),
                 date.getMonth().getValue(), 1);
 
-        buildCalendar(thisDate, date.getDayOfMonth(), startWithCustomDay, weekends);
+        buildCalendar(thisDate, date.getDayOfMonth(), startWithCustomDay);
     }
 
-    private void buildCalendar(LocalDate thisDate, int currentDay, int startWithCustomDay, List<Integer> weekends) {
+    private void buildCalendar(LocalDate thisDate, int currentDay, int startWithCustomDay) {
         try (PrintWriter writer = new PrintWriter("calendar.html")) {
             writer.println(getHTMLHeader());
-            writer.println(getWeekends(startWithCustomDay, weekends));
-            writer.println(getBody(thisDate, startWithCustomDay, currentDay, weekends));
+            writer.println(getWeekends(startWithCustomDay));
+            writer.println(getBody(thisDate, startWithCustomDay, currentDay));
             writer.println(getHTMLFooter());
 
         } catch (FileNotFoundException e) {
@@ -43,7 +50,7 @@ public class WebCalendar implements Calendar {
         }
     }
 
-    private String getBody(LocalDate thisDate, int startWithCustomDay, int currentDay, List<Integer> weekends) {
+    private String getBody(LocalDate thisDate, int startWithCustomDay, int currentDay) {
         DayOfWeek dayOfWeek = thisDate.getDayOfWeek();
         StringBuilder days = new StringBuilder();
         days.append("<tr>\n");
@@ -55,13 +62,13 @@ public class WebCalendar implements Calendar {
         return days.toString();
     }
 
-    private String getWeekends(int startWithCustomDay, List<Integer> weekends) {
+    private String getWeekends(int startWithCustomDay) {
         StringBuilder builder = new StringBuilder();
         builder.append("<tr>\n\t");
         for (DayOfWeek dayOfWeek : WeekdaysName.getWeekdays(startWithCustomDay)) {
             String dayName = CalendarUtils.getFormattedDay(WeekdaysName.getDayValue(dayOfWeek));
             builder.append(CalendarUtils.isWeekend(dayOfWeek.getValue(), weekends) ?
-                    CalendarUtils.toWeekendWebColor(dayName) : "<td>" + dayName + "</td>")
+                    CalendarUtils.toWeekendColor(dayName, CalendarUtils.WEB_VIEW) : "<td>" + dayName + "</td>")
                     .append("\n")
                     .append("\t");
         }

@@ -2,11 +2,12 @@ package calendar.console;
 
 import calendar.interfaces.Calendar;
 import calendar.utils.CalendarUtils;
-import calendar.utils.WeekdaysValues;
 import calendar.utils.WeekdaysName;
+import calendar.utils.WeekdaysValues;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -14,8 +15,22 @@ import java.util.List;
  */
 public class ConsoleCalendar implements Calendar {
 
-    private static LocalDate thisDate;
-    private static List<Integer> weekends;
+    private LocalDate thisDate;
+    private final List<DayOfWeek> weekends = Arrays.asList(DayOfWeek.SATURDAY, DayOfWeek.SUNDAY);
+
+    public ConsoleCalendar() {
+        this(LocalDate.now());
+    }
+
+    public ConsoleCalendar(LocalDate thisDate) {
+        this(thisDate, );
+        this.thisDate = thisDate;
+    }
+
+    public ConsoleCalendar(LocalDate thisDate, List<DayOfWeek> weekends){
+        this.thisDate = thisDate;
+        this.weekends = weekends;
+    }
 
     @Override
     public void print(int startWithCustomDay, LocalDate currentDate, List<Integer> listWeekends) {
@@ -53,7 +68,8 @@ public class ConsoleCalendar implements Calendar {
         StringBuilder builder = new StringBuilder();
         for (DayOfWeek dayOfWeek : WeekdaysName.getWeekdays(startWeekendOfDay)) {
             String dayName = CalendarUtils.getFormattedDay(WeekdaysName.getDayValue(dayOfWeek));
-            builder.append(dayName);
+            builder.append(CalendarUtils.isWeekend(dayOfWeek.getValue(), weekends) ?
+                    CalendarUtils.toWeekendColor(dayName, CalendarUtils.CONSOLE_VIEW) : dayName);
         }
         return builder.toString();
     }

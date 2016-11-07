@@ -22,10 +22,6 @@ public class CalendarUtils {
         return weekends.contains(dayOfWeek);
     }
 
-    public static String toWeekendConsoleColor(String value){
-        return ANSI_RED + value + ANSI_RESET;
-    }
-
     static String toAnotherMonthColor(String value, String type){
         if (type.equals(WEB_VIEW))
             return "<td class=\"anotherMonthColor\">" + value + "</td>";
@@ -43,7 +39,7 @@ public class CalendarUtils {
         return value;
     }
 
-    static String toWeekendColor(String value, String type) {
+    public static String toWeekendColor(String value, String type) {
         if (type.equals(WEB_VIEW))
             return "<td class=\"weekend\">" + value + "</td>";
         else if (type.equals(CONSOLE_VIEW))
@@ -62,10 +58,6 @@ public class CalendarUtils {
     public static int getBeforeValue(LocalDate localDate, int customFirstDay) {
         return localDate.getDayOfWeek().getValue() == customFirstDay ?
                 7 - localDate.minusDays(1).getDayOfMonth() : getBeforeValue(localDate.plusDays(1), customFirstDay);
-    }
-
-    public static String toWeekendWebColor(String dayName) {
-        return "<td class=\"weekend\">" + dayName + "</td>";
     }
 
 }
