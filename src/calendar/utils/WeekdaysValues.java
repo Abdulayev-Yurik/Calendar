@@ -11,11 +11,11 @@ public class WeekdaysValues extends CalendarUtils{
 
     private static DayOfWeek endDayOfCurrentMonth;
 
-    public static String getPreviousMonthDays(LocalDate thisDate, int startWeekendOfDay, String type) {
+    public static String getPreviousMonthDays(LocalDate firstDayOfMonth, int startWeekendOfDay, String type) {
         StringBuilder days = new StringBuilder();
-        for (int i = getBeforeValue(thisDate, startWeekendOfDay); i > 0; i--) {
+        for (int i = getBeforeValue(firstDayOfMonth, startWeekendOfDay); i > 0; i--) {
             String formattedDay = WeekdaysValues.getFormattedDay(
-                    CalendarUtils.getFormattedDay(thisDate.minusDays(i).getDayOfMonth() + ""));
+                    CalendarUtils.getFormattedDay(firstDayOfMonth.minusDays(i).getDayOfMonth() + ""));
             days.append(CalendarUtils.toAnotherMonthColor(formattedDay, type));
         }
         return days.toString();
@@ -35,7 +35,7 @@ public class WeekdaysValues extends CalendarUtils{
 
 
     public static String getMonthValues(LocalDate thisDate, int currentDay, DayOfWeek dayOfWeek,
-                                        List<Integer> weekends, int startWeekendOfDay, String typeView) {
+                                        List<DayOfWeek> weekends, int startWeekendOfDay, String typeView) {
         StringBuilder days = new StringBuilder();
         for (int numberDay = 1; numberDay <= thisDate.getMonth().length(thisDate.isLeapYear()); numberDay++) {
             String formattedDay = CalendarUtils.getFormattedDay(numberDay + "");
@@ -58,10 +58,10 @@ public class WeekdaysValues extends CalendarUtils{
     }
 
     private static String getColorDay(int numberDay, int currentDay, String formattedDay,
-                                      DayOfWeek dayOfWeek, List<Integer> weekends, String typeView) {
+                                      DayOfWeek dayOfWeek, List<DayOfWeek> weekends, String typeView) {
         if (isCurrentDay(numberDay, currentDay)) {
             return toThisDayColor(formattedDay, typeView);
-        } else if (isWeekend(dayOfWeek.getValue(), weekends)) {
+        } else if (isWeekend(dayOfWeek, weekends)) {
             return toWeekendColor(formattedDay, typeView);
         } else {
             return getDay(formattedDay, typeView);

@@ -5,13 +5,11 @@ import calendar.utils.CalendarUtils;
 import calendar.utils.WeekdaysName;
 import calendar.utils.WeekdaysValues;
 
-import java.awt.*;
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -19,30 +17,42 @@ import java.util.List;
  */
 public class WebCalendar implements Calendar {
 
-    private static List<Integer> weekends;
+    private LocalDate thisDate;
+    private DayOfWeek startWeek;
+    private List<DayOfWeek> weekend;
+    private LocalDate firstDayOfMonth;
 
-    public WebCalendar(){
+    public WebCalendar() {
+        this(LocalDate.now());
+    }
 
+    public WebCalendar(LocalDate thisDate) {
+        this(thisDate, DayOfWeek.MONDAY);
+    }
+
+    public WebCalendar(LocalDate thisDate, DayOfWeek startWeek){
+        this(thisDate, startWeek, Arrays.asList(DayOfWeek.SATURDAY, DayOfWeek.SUNDAY));
+    }
+
+    public WebCalendar(LocalDate thisDate, DayOfWeek startWeek, List<DayOfWeek> weekend) {
+        this.thisDate = thisDate;
+        this.startWeek = startWeek;
+        this.weekend = weekend;
     }
 
     @Override
-    public void print(int startWithCustomDay, LocalDate date, List<Integer> listWeekends) {
-        weekends = listWeekends;
-        parseDate(startWithCustomDay, date);
+    public void print() {
+        firstDayOfMonth = LocalDate.of(thisDate.getYear(),
+                thisDate.getMonth().getValue(), 1);
+
+        buildCalendar(thisDate.getDayOfMonth());
     }
 
-    private void parseDate(int startWithCustomDay, LocalDate date) {
-        LocalDate thisDate = LocalDate.of(date.getYear(),
-                date.getMonth().getValue(), 1);
-
-        buildCalendar(thisDate, date.getDayOfMonth(), startWithCustomDay);
-    }
-
-    private void buildCalendar(LocalDate thisDate, int currentDay, int startWithCustomDay) {
+    private void buildCalendar(int currentDay) {
         try (PrintWriter writer = new PrintWriter("calendar.html")) {
             writer.println(getHTMLHeader());
-            writer.println(getWeekends(startWithCustomDay));
-            writer.println(getBody(thisDate, startWithCustomDay, currentDay));
+            writer.println(getWeekends(startWeek.getValue()));
+            writer.println(getBody(currentDay));
             writer.println(getHTMLFooter());
 
         } catch (FileNotFoundException e) {
@@ -50,14 +60,14 @@ public class WebCalendar implements Calendar {
         }
     }
 
-    private String getBody(LocalDate thisDate, int startWithCustomDay, int currentDay) {
-        DayOfWeek dayOfWeek = thisDate.getDayOfWeek();
+    private String getBody(int currentDay) {
+        DayOfWeek dayOfWeek = firstDayOfMonth.getDayOfWeek();
         StringBuilder days = new StringBuilder();
         days.append("<tr>\n");
-        days.append(WeekdaysValues.getPreviousMonthDays(thisDate, startWithCustomDay, CalendarUtils.WEB_VIEW));
-        days.append(WeekdaysValues.getMonthValues(thisDate, currentDay, dayOfWeek, weekends,
-                startWithCustomDay, CalendarUtils.WEB_VIEW));
-        days.append(WeekdaysValues.getNextMonthDays(startWithCustomDay, CalendarUtils.WEB_VIEW));
+        days.append(WeekdaysValues.getPreviousMonthDays(firstDayOfMonth, startWeek.getValue(), CalendarUtils.WEB_VIEW));
+        days.append(WeekdaysValues.getMonthValues(thisDate, currentDay, dayOfWeek, weekend,
+                startWeek.getValue(), CalendarUtils.WEB_VIEW));
+        days.append(WeekdaysValues.getNextMonthDays(startWeek.getValue(), CalendarUtils.WEB_VIEW));
         days.append("</tr>");
         return days.toString();
     }
@@ -67,7 +77,7 @@ public class WebCalendar implements Calendar {
         builder.append("<tr>\n\t");
         for (DayOfWeek dayOfWeek : WeekdaysName.getWeekdays(startWithCustomDay)) {
             String dayName = CalendarUtils.getFormattedDay(WeekdaysName.getDayValue(dayOfWeek));
-            builder.append(CalendarUtils.isWeekend(dayOfWeek.getValue(), weekends) ?
+            builder.append(CalendarUtils.isWeekend(dayOfWeek, weekend) ?
                     CalendarUtils.toWeekendColor(dayName, CalendarUtils.WEB_VIEW) : "<td>" + dayName + "</td>")
                     .append("\n")
                     .append("\t");

@@ -5,7 +5,6 @@ import calendar.interfaces.Calendar;
 import calendar.web.WebCalendar;
 
 import java.time.DayOfWeek;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -46,7 +45,7 @@ public class PrintCustomCalendar {
                 break;
         }
 
-        if (calendar != null) calendar.print(customStartDay, LocalDate.of(year, month, day), weekends);
+//        if (calendar != null) calendar.print(customStartDay, LocalDate.of(year, month, day), weekends);
     }
 
 

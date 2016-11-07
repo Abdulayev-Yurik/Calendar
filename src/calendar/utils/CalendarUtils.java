@@ -1,8 +1,8 @@
 package calendar.utils;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Created by employee on 11/2/16.
@@ -18,7 +18,7 @@ public class CalendarUtils {
     public static final String CONSOLE_VIEW = "console";
     static final int DAYS_IN_WEEK = 7;
 
-    public static boolean isWeekend(int dayOfWeek, List weekends){
+    public static boolean isWeekend(DayOfWeek dayOfWeek, List<DayOfWeek> weekends){
         return weekends.contains(dayOfWeek);
     }
 

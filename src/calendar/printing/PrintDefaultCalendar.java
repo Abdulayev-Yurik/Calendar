@@ -4,10 +4,6 @@ import calendar.console.ConsoleCalendar;
 import calendar.interfaces.Calendar;
 import calendar.web.WebCalendar;
 
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -16,8 +12,6 @@ import java.util.Scanner;
 public class PrintDefaultCalendar {
 
     public PrintDefaultCalendar(){
-        int startWithDefaultDay = DayOfWeek.MONDAY.getValue();
-
         Calendar calendar = null;
         System.out.println("Enter print mode, 1-Console, 2-WEB page");
         switch (new Scanner(System.in).nextInt()) {
@@ -29,7 +23,7 @@ public class PrintDefaultCalendar {
                 break;
         }
         if (calendar != null){
-            calendar.print(startWithDefaultDay, LocalDate.now());
+            calendar.print();
         }
     }
 
