@@ -2,11 +2,14 @@ package calendar.utils;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  * Created by employee on 11/3/16.
  */
 public class WeekdaysValues extends CalendarUtils{
+
+    private static DayOfWeek endDayOfCurrentMonth;
 
     public static String getPreviousMonthDays(LocalDate thisDate, int startWeekendOfDay, String type) {
         StringBuilder days = new StringBuilder();
@@ -19,16 +22,72 @@ public class WeekdaysValues extends CalendarUtils{
     }
 
 
-    public static String getNextMonthDays(int startWithCustomDay, DayOfWeek dayOfWeek, String type) {
-        StringBuilder builder = new StringBuilder();
-        for (int day = 1; dayOfWeek.getValue() != DayOfWeek.of(startWithCustomDay).getValue();
-             dayOfWeek = dayOfWeek.plus(1) , day++){
+    public static String getNextMonthDays(int startWithCustomDay, String type) {
+        StringBuilder days = new StringBuilder();
+        for (int day = 1; endDayOfCurrentMonth.getValue() != DayOfWeek.of(startWithCustomDay).getValue();
+             endDayOfCurrentMonth = endDayOfCurrentMonth.plus(1) , day++){
             String formattedDay = WeekdaysValues.getFormattedDay(
                     CalendarUtils.getFormattedDay(day + ""));
-            builder.append(CalendarUtils.toAnotherMonthColor(formattedDay, type));
+            days.append(CalendarUtils.toAnotherMonthColor(formattedDay, type));
         }
-        return builder.toString();
+        return days.toString();
     }
 
 
+    public static String getMonthValues(LocalDate thisDate, int currentDay, DayOfWeek dayOfWeek,
+                                        List<Integer> weekends, int startWeekendOfDay, String type) {
+        StringBuilder days = new StringBuilder();
+        for (int numberDay = 1; numberDay <= thisDate.getMonth().length(thisDate.isLeapYear()); numberDay++) {
+            String formattedDay = CalendarUtils.getFormattedDay(numberDay + "");
+            days.append(getColorDay(numberDay, currentDay, formattedDay, dayOfWeek, weekends, type));
+            if (dayOfWeek.getValue() == CalendarUtils.backDay(startWeekendOfDay)) {
+                days.append(toNewLine(type));
+            }
+            dayOfWeek = dayOfWeek.plus(1);
+        }
+        endDayOfCurrentMonth = dayOfWeek;
+        return days.toString();
+    }
+
+    private static String toNewLine(String type) {
+        if (type.equals(WEB_VIEW))
+            return "\n</tr>\n<tr>\n";
+        else if (type.equals(CONSOLE_VIEW))
+            return "\n";
+        return "";
+    }
+
+    private static String getColorDay(int numberDay, int currentDay, String formattedDay,
+                                      DayOfWeek dayOfWeek, List<Integer> weekends, String type) {
+        if (numberDay == currentDay) {
+            return toThisDayColor(formattedDay, type);
+        } else if (isWeekend(dayOfWeek.getValue(), weekends)) {
+            return toWeekendColor(formattedDay, type);
+        } else {
+            return getDay(formattedDay, type);
+        }
+    }
+
+    private static String getDay(String value, String type) {
+        if (type.equals(WEB_VIEW))
+            return "<td>" + value + "</td>";
+        else
+            return value;
+    }
+
+
+//    for (int numberDay = 1; numberDay <= thisDate.getMonth().length(thisDate.isLeapYear()); numberDay++) {
+//        String formattedDay = CalendarUtils.getFormattedDay(numberDay + "");
+//        if (numberDay == currentDay) {
+//            days.append(CalendarUtils.toThisDayWebColor(formattedDay));
+//        }else if (CalendarUtils.isWeekend(dayOfWeek.getValue(), weekends)){
+//            days.append(CalendarUtils.toWeekendWebColor(formattedDay));
+//        }else {
+//            days.append("<td>").append(formattedDay).append("</td>");
+//        }
+//        if (dayOfWeek.getValue() == CalendarUtils.backDay(startWithCustomDay)){
+////                days.append(WeekdaysValues.);
+//        }
+//        dayOfWeek = dayOfWeek.plus(1);
+//    }
 }

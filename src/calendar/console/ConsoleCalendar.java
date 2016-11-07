@@ -38,25 +38,12 @@ public class ConsoleCalendar implements Calendar {
 
     private String getMonthValues(LocalDate thisDate, int startWeekendOfDay, int currentDay, List<Integer> weekends) {
         DayOfWeek dayOfWeek = thisDate.getDayOfWeek();
-        StringBuilder days = new StringBuilder();
-        days.append(WeekdaysValues.getPreviousMonthDays(thisDate, startWeekendOfDay, CalendarUtils.CONSOLE_VIEW));
-
-        for (int numberDay = 1; numberDay <= thisDate.getMonth().length(thisDate.isLeapYear()); numberDay++) {
-            String formattedDay = CalendarUtils.getFormattedDay(numberDay + "");
-            if (numberDay == currentDay) {
-                days.append(CalendarUtils.toThisDayConsoleColor(formattedDay));
-            } else if (CalendarUtils.isWeekend(dayOfWeek.getValue(), weekends)) {
-                days.append(CalendarUtils.toWeekendConsoleColor(formattedDay));
-            } else {
-                days.append(formattedDay);
-            }
-            if (dayOfWeek.getValue() == CalendarUtils.backDay(startWeekendOfDay)) {
-                days.append("\n");
-            }
-            dayOfWeek = dayOfWeek.plus(1);
-        }
-        days.append(WeekdaysValues.getNextMonthDays(startWeekendOfDay, dayOfWeek, CalendarUtils.CONSOLE_VIEW));
-        return days.toString();
+        return new StringBuilder()
+                .append(WeekdaysValues.getPreviousMonthDays(thisDate, startWeekendOfDay, CalendarUtils.CONSOLE_VIEW))
+                .append(WeekdaysValues.getMonthValues(thisDate, currentDay, dayOfWeek, weekends,
+                        startWeekendOfDay, CalendarUtils.CONSOLE_VIEW))
+                .append(WeekdaysValues.getNextMonthDays(startWeekendOfDay, CalendarUtils.CONSOLE_VIEW))
+                .toString();
     }
 
     private String getWeekNames(int startWeekendOfDay, List<Integer> weekends) {

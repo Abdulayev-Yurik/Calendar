@@ -17,8 +17,6 @@ public class CalendarUtils {
     public static final String WEB_VIEW = "web";
     public static final String CONSOLE_VIEW = "console";
     static final int DAYS_IN_WEEK = 7;
-    protected static final int MAX_WEEKS = 6;
-
 
     public static boolean isWeekend(int dayOfWeek, List weekends){
         return weekends.contains(dayOfWeek);
@@ -39,6 +37,22 @@ public class CalendarUtils {
             return ANSI_YELLOW + value + ANSI_RESET;
         else
             return value;
+    }
+
+    static String toThisDayColor(String value, String type) {
+        if (type.equals(WEB_VIEW))
+            return "<td class=\"currentDay\">" + value + "</td>";
+        else if (type.equals(CONSOLE_VIEW))
+            return ANSI_CYAN + value + ANSI_RESET;
+        return value;
+    }
+
+    static String toWeekendColor(String value, String type) {
+        if (type.equals(WEB_VIEW))
+            return "<td class=\"weekend\">" + value + "</td>";
+        else if (type.equals(CONSOLE_VIEW))
+            return ANSI_RED + value + ANSI_RESET;
+        return value;
     }
 
     public static int backDay(int value) {
