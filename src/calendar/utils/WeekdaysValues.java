@@ -8,26 +8,6 @@ import java.time.LocalDate;
  */
 public class WeekdaysValues extends CalendarUtils{
 
-    public static String getWeekDays(int firstDayOfWeek,
-                                     int monthLength) {
-        getDays(monthLength);
-
-        return null;
-    }
-
-    public static String[] getDays(int monthLength) {
-        String[] days = new String[monthLength];
-        for (int day = 1; day <= days.length; day++) {
-            days[day - 1] = day + "";
-        }
-        return days;
-    }
-
-    private static boolean isThisMonth(int firstDayOfWeek, int monthLength, int day) {
-        return day > firstDayOfWeek && day - firstDayOfWeek <= monthLength;
-    }
-
-
     public static String getPreviousMonthDays(LocalDate thisDate, int startWeekendOfDay, String type) {
         StringBuilder days = new StringBuilder();
         for (int i = getBeforeValue(thisDate, startWeekendOfDay); i > 0; i--) {
@@ -49,4 +29,6 @@ public class WeekdaysValues extends CalendarUtils{
         }
         return builder.toString();
     }
+
+
 }

@@ -32,11 +32,7 @@ public class CalendarUtils {
         return ANSI_CYAN + value + ANSI_RESET;
     }
 
-    public static String toAnotherMonthConsoleColor(String value){
-        return ANSI_YELLOW + value + ANSI_RESET;
-    }
-
-    public static String toAnotherMonthColor(String value, String type){
+    static String toAnotherMonthColor(String value, String type){
         if (type.equals(WEB_VIEW))
             return "<td class=\"anotherMonthColor\">" + value + "</td>";
         else if (type.equals(CONSOLE_VIEW))
@@ -60,10 +56,6 @@ public class CalendarUtils {
 
     public static String toWeekendWebColor(String dayName) {
         return "<td class=\"weekend\">" + dayName + "</td>";
-    }
-
-    public static String toAnotherMonthWebColor(String formattedDay) {
-        return "<td class=\"anotherMonthColor\">" + formattedDay + "</td>";
     }
 
     public static String toThisDayWebColor(String formattedDay) {
