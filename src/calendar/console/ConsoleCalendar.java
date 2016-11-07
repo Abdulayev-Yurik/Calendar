@@ -14,29 +14,32 @@ import java.util.List;
  */
 public class ConsoleCalendar implements Calendar {
 
+    private static LocalDate thisDate;
+    private static List<Integer> weekends;
+
     @Override
-    public void print(int startWithCustomDay, LocalDate currentDate, List<Integer> weekends) {
-        parseDate(startWithCustomDay, currentDate, weekends);
+    public void print(int startWithCustomDay, LocalDate currentDate, List<Integer> listWeekends) {
+        weekends = listWeekends;
+        parseDate(startWithCustomDay, currentDate);
     }
 
-    private void parseDate(int startWithCustomDay, LocalDate date, List<Integer> weekends) {
-        LocalDate thisDate = LocalDate.of(date.getYear(),
+    private void parseDate(int startWithCustomDay, LocalDate date) {
+        thisDate = LocalDate.of(date.getYear(),
                 date.getMonth().getValue(), 1);
 
-        System.out.println(generateView(thisDate,
-                date.getDayOfMonth(), startWithCustomDay, weekends));
+        System.out.println(generateView(date.getDayOfMonth(), startWithCustomDay));
     }
 
-    private String generateView(LocalDate thisDate, int currentDay,
-                                int startWeekendOfDay, List<Integer> weekends) {
+    private String generateView(int currentDay,
+                                int startWeekendOfDay) {
         StringBuilder view = new StringBuilder();
-        view.append(getWeekNames(startWeekendOfDay, weekends));
+        view.append(getWeekNames(startWeekendOfDay));
         view.append("\n");
-        view.append(getMonthValues(thisDate, startWeekendOfDay, currentDay, weekends));
+        view.append(getMonthValues(startWeekendOfDay, currentDay));
         return view.toString();
     }
 
-    private String getMonthValues(LocalDate thisDate, int startWeekendOfDay, int currentDay, List<Integer> weekends) {
+    private String getMonthValues(int startWeekendOfDay, int currentDay) {
         DayOfWeek dayOfWeek = thisDate.getDayOfWeek();
         return new StringBuilder()
                 .append(WeekdaysValues.getPreviousMonthDays(thisDate, startWeekendOfDay, CalendarUtils.CONSOLE_VIEW))
@@ -46,12 +49,11 @@ public class ConsoleCalendar implements Calendar {
                 .toString();
     }
 
-    private String getWeekNames(int startWeekendOfDay, List<Integer> weekends) {
+    private String getWeekNames(int startWeekendOfDay) {
         StringBuilder builder = new StringBuilder();
         for (DayOfWeek dayOfWeek : WeekdaysName.getWeekdays(startWeekendOfDay)) {
             String dayName = CalendarUtils.getFormattedDay(WeekdaysName.getDayValue(dayOfWeek));
-            builder.append(CalendarUtils.isWeekend(dayOfWeek.getValue(), weekends) ?
-                    CalendarUtils.toWeekendConsoleColor(dayName) : dayName);
+            builder.append(dayName);
         }
         return builder.toString();
     }
