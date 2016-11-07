@@ -55,7 +55,7 @@ public class ConsoleCalendar implements Calendar {
             }
             dayOfWeek = dayOfWeek.plus(1);
         }
-        days.append(WeekdaysValues.getNextMonthDays(startWeekendOfDay, dayOfWeek, CalendarUtils.WEB_VIEW));
+        days.append(WeekdaysValues.getNextMonthDays(startWeekendOfDay, dayOfWeek, CalendarUtils.CONSOLE_VIEW));
         return days.toString();
     }
 
