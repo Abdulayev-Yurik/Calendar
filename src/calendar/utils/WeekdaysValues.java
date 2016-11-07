@@ -35,13 +35,13 @@ public class WeekdaysValues extends CalendarUtils{
 
 
     public static String getMonthValues(LocalDate thisDate, int currentDay, DayOfWeek dayOfWeek,
-                                        List<Integer> weekends, int startWeekendOfDay, String type) {
+                                        List<Integer> weekends, int startWeekendOfDay, String typeView) {
         StringBuilder days = new StringBuilder();
         for (int numberDay = 1; numberDay <= thisDate.getMonth().length(thisDate.isLeapYear()); numberDay++) {
             String formattedDay = CalendarUtils.getFormattedDay(numberDay + "");
-            days.append(getColorDay(numberDay, currentDay, formattedDay, dayOfWeek, weekends, type));
+            days.append(getColorDay(numberDay, currentDay, formattedDay, dayOfWeek, weekends, typeView));
             if (dayOfWeek.getValue() == CalendarUtils.backDay(startWeekendOfDay)) {
-                days.append(toNewLine(type));
+                days.append(toNewLine(typeView));
             }
             dayOfWeek = dayOfWeek.plus(1);
         }
@@ -58,14 +58,18 @@ public class WeekdaysValues extends CalendarUtils{
     }
 
     private static String getColorDay(int numberDay, int currentDay, String formattedDay,
-                                      DayOfWeek dayOfWeek, List<Integer> weekends, String type) {
-        if (numberDay == currentDay) {
-            return toThisDayColor(formattedDay, type);
+                                      DayOfWeek dayOfWeek, List<Integer> weekends, String typeView) {
+        if (isCurrentDay(numberDay, currentDay)) {
+            return toThisDayColor(formattedDay, typeView);
         } else if (isWeekend(dayOfWeek.getValue(), weekends)) {
-            return toWeekendColor(formattedDay, type);
+            return toWeekendColor(formattedDay, typeView);
         } else {
-            return getDay(formattedDay, type);
+            return getDay(formattedDay, typeView);
         }
+    }
+
+    static boolean isCurrentDay(int numberDay, int currentDay) {
+        return numberDay == currentDay;
     }
 
     private static String getDay(String value, String type) {
@@ -74,20 +78,4 @@ public class WeekdaysValues extends CalendarUtils{
         else
             return value;
     }
-
-
-//    for (int numberDay = 1; numberDay <= thisDate.getMonth().length(thisDate.isLeapYear()); numberDay++) {
-//        String formattedDay = CalendarUtils.getFormattedDay(numberDay + "");
-//        if (numberDay == currentDay) {
-//            days.append(CalendarUtils.toThisDayWebColor(formattedDay));
-//        }else if (CalendarUtils.isWeekend(dayOfWeek.getValue(), weekends)){
-//            days.append(CalendarUtils.toWeekendWebColor(formattedDay));
-//        }else {
-//            days.append("<td>").append(formattedDay).append("</td>");
-//        }
-//        if (dayOfWeek.getValue() == CalendarUtils.backDay(startWithCustomDay)){
-////                days.append(WeekdaysValues.);
-//        }
-//        dayOfWeek = dayOfWeek.plus(1);
-//    }
 }
