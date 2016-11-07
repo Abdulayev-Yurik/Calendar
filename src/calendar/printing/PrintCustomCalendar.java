@@ -5,6 +5,7 @@ import calendar.interfaces.Calendar;
 import calendar.web.WebCalendar;
 
 import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -35,27 +36,29 @@ public class PrintCustomCalendar {
         System.out.println("Enter custom start day of week : ");
         int customStartDay = getFirsDayOfWeek(scanner.nextInt());
         System.out.println("Enter weekends: 1,2,3");
-        List<Integer> weekends = getWeekends(new Scanner(System.in).nextLine());
+        List<DayOfWeek> weekends = getWeekends(new Scanner(System.in).nextLine());
         switch (type) {
             case 1:
-                calendar = new ConsoleCalendar();
+                calendar = new ConsoleCalendar(LocalDate.of(year, month, day),
+                        DayOfWeek.of(customStartDay), weekends);
                 break;
             case 2:
-                calendar = new WebCalendar();
+                calendar = new WebCalendar(LocalDate.of(year, month, day),
+                        DayOfWeek.of(customStartDay), weekends);
                 break;
         }
 
-//        if (calendar != null) calendar.print(customStartDay, LocalDate.of(year, month, day), weekends);
+        if (calendar != null) calendar.print();
     }
 
 
-    private static List<Integer> getWeekends(String weekends) {
-        List<Integer> listWeekends = new ArrayList<>();
+    private static List<DayOfWeek> getWeekends(String weekends) {
+        List<DayOfWeek> listWeekends = new ArrayList<>();
         if (weekends.isEmpty()) {
-            return Arrays.asList(DayOfWeek.SATURDAY.getValue(), DayOfWeek.SUNDAY.getValue());
+            return Arrays.asList(DayOfWeek.SATURDAY, DayOfWeek.SUNDAY);
         }
         for (String s : weekends.split(",")) {
-            listWeekends.add(parseInt(s.trim()));
+            listWeekends.add(DayOfWeek.of(parseInt(s.trim())));
         }
         return listWeekends;
     }
