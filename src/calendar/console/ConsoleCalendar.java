@@ -50,7 +50,7 @@ public class ConsoleCalendar extends Calendar {
 
     public String getWeekNames() {
         StringBuilder builder = new StringBuilder();
-        for (DayOfWeek dayOfWeek : getWeekdays(startWeek.getValue())) {
+        for (DayOfWeek dayOfWeek : getWeekdays(getStartWeekValue())) {
             String dayName = getFormattedDay(getDayValue(dayOfWeek));
             builder.append(isWeekend(dayOfWeek) ?
                     toWeekendColor(dayName, CONSOLE_VIEW) : dayName);

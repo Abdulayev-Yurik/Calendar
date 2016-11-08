@@ -15,12 +15,13 @@ import java.util.Locale;
  */
 public abstract class Calendar extends CalendarUtils {
 
-    protected LocalDate thisDate;
-    protected DayOfWeek startWeek;
-    protected List<DayOfWeek> weekend;
-    protected LocalDate firstDayOfMonth;
+    private LocalDate thisDate;
+    private DayOfWeek startWeek;
+    private List<DayOfWeek> weekend;
+    private LocalDate firstDayOfMonth;
+    private DayOfWeek endDayOfCurrentMonth;
 
-    public void innit(LocalDate thisDate, DayOfWeek startWeek, List<DayOfWeek> weekend) {
+    protected void innit(LocalDate thisDate, DayOfWeek startWeek, List<DayOfWeek> weekend) {
         this.thisDate = thisDate;
         this.startWeek = startWeek;
         this.weekend = weekend;
@@ -28,8 +29,6 @@ public abstract class Calendar extends CalendarUtils {
         firstDayOfMonth = LocalDate.of(thisDate.getYear(),
                 thisDate.getMonth().getValue(), 1);
     }
-
-    private DayOfWeek endDayOfCurrentMonth;
 
     public abstract void print();
 
@@ -125,5 +124,9 @@ public abstract class Calendar extends CalendarUtils {
 
     protected boolean isWeekend(DayOfWeek dayOfWeek){
         return weekend.contains(dayOfWeek);
+    }
+
+    protected int getStartWeekValue(){
+        return startWeek.getValue();
     }
 }

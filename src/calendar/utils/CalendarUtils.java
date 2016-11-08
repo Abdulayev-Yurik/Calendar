@@ -9,7 +9,7 @@ import java.util.List;
  */
 public class CalendarUtils {
 
-    static final String TYPICAL_STRING_FORMAT = "%4s";
+    static final String TYPICAL_STRING_FORMAT = "%5s";
     private static final String ANSI_RESET = "\u001B[0m";
     private static final String ANSI_RED = "\u001B[31m";
     private static final String ANSI_CYAN = "\u001B[36m";

@@ -59,7 +59,7 @@ public class WebCalendar extends Calendar {
     public String getWeekNames() {
         StringBuilder builder = new StringBuilder();
         builder.append("<tr>\n\t");
-        for (DayOfWeek dayOfWeek : getWeekdays(startWeek.getValue())) {
+        for (DayOfWeek dayOfWeek : getWeekdays(getStartWeekValue())) {
             String dayName = getFormattedDay(getDayValue(dayOfWeek));
             builder.append(isWeekend(dayOfWeek) ?
                     toWeekendColor(dayName, WEB_VIEW) : "<td>" + dayName + "</td>")
