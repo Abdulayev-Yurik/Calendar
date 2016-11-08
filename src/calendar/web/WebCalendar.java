@@ -36,6 +36,7 @@ public class WebCalendar extends Calendar {
 
     public void generateView() {
         try (PrintWriter writer = new PrintWriter("calendar.html")) {
+            writer.println("<tr>" + getCurrentMonthHeader() + "</tr>");
             writer.println(getHTMLHeader());
             writer.println(getWeekNames());
             writer.println(getMonthValues());

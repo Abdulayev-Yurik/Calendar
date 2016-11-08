@@ -34,6 +34,7 @@ public class ConsoleCalendar extends Calendar {
 
     public void generateView() {
         StringBuilder view = new StringBuilder();
+        view.append("\t ").append(getCurrentMonthHeader()).append("\n");
         view.append(getWeekNames());
         view.append("\n");
         view.append(getMonthValues());

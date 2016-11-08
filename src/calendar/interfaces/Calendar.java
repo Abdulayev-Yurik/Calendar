@@ -21,6 +21,8 @@ public abstract class Calendar extends CalendarUtils {
     private LocalDate firstDayOfMonth;
     private DayOfWeek endDayOfCurrentMonth;
 
+    private Locale locale = Locale.ENGLISH;
+
     protected void innit(LocalDate thisDate, DayOfWeek startWeek, List<DayOfWeek> weekend) {
         this.thisDate = thisDate;
         this.startWeek = startWeek;
@@ -43,7 +45,7 @@ public abstract class Calendar extends CalendarUtils {
         for (int i = getBeforeValue(firstDayOfMonth, startWeek.getValue()); i > 0; i--) {
             String formattedDay = getFormattedDay(
                     CalendarUtils.getFormattedDay(firstDayOfMonth.minusDays(i).getDayOfMonth() + ""));
-            days.append(CalendarUtils.toAnotherMonthColor(formattedDay, type));
+            days.append(toAnotherMonthColor(formattedDay, type));
         }
         return days.toString();
     }
@@ -52,20 +54,21 @@ public abstract class Calendar extends CalendarUtils {
     protected String getNextMonthDays(String type) {
         StringBuilder days = new StringBuilder();
         for (int day = 1; endDayOfCurrentMonth.getValue() != startWeek.getValue();
-             endDayOfCurrentMonth = endDayOfCurrentMonth.plus(1) , day++){
-            String formattedDay = getFormattedDay(
-                    CalendarUtils.getFormattedDay(day + ""));
-            days.append(CalendarUtils.toAnotherMonthColor(formattedDay, type));
+             endDayOfCurrentMonth = endDayOfCurrentMonth.plus(1), day++) {
+            String formattedDay = getFormattedDay(day + "");
+            days.append(toAnotherMonthColor(formattedDay, type));
         }
         return days.toString();
     }
 
 
     protected String getCurrentMonthValues(String typeView) {
+        int monthLength = firstDayOfMonth.getMonth().length(firstDayOfMonth.isLeapYear());
         StringBuilder days = new StringBuilder();
-        for (int numberDay = 1; numberDay <= firstDayOfMonth.getMonth().length(firstDayOfMonth.isLeapYear()); numberDay++) {
-            days.append(getColorDay(numberDay, thisDate.getDayOfMonth(), firstDayOfMonth.getDayOfWeek(), typeView));
-            if (firstDayOfMonth.getDayOfWeek().getValue() == CalendarUtils.backDay(startWeek.getValue())) {
+        for (int numberDay = 1; numberDay <= monthLength; numberDay++) {
+            days.append(getColorDay(numberDay, thisDate.getDayOfMonth(),
+                    firstDayOfMonth.getDayOfWeek(), typeView));
+            if (isEndWeek(startWeek)) {
                 days.append(toNewLine(typeView));
             }
             firstDayOfMonth = firstDayOfMonth.plusDays(1);
@@ -83,7 +86,7 @@ public abstract class Calendar extends CalendarUtils {
     }
 
     private String getColorDay(int numberDay, int currentDay,
-                                      DayOfWeek dayOfWeek, String typeView) {
+                               DayOfWeek dayOfWeek, String typeView) {
         String formattedDay = CalendarUtils.getFormattedDay(numberDay + "");
         if (isCurrentDay(numberDay, currentDay)) {
             return toThisDayColor(formattedDay, typeView);
@@ -116,17 +119,25 @@ public abstract class Calendar extends CalendarUtils {
     }
 
     @NotNull
-    protected static String getDayValue(DayOfWeek dayOfWeek) {
+    protected String getDayValue(DayOfWeek dayOfWeek) {
         return dayOfWeek
-                .getDisplayName(TextStyle.SHORT, Locale.ENGLISH)
+                .getDisplayName(TextStyle.SHORT, locale)
                 .toUpperCase();
     }
 
-    protected boolean isWeekend(DayOfWeek dayOfWeek){
+    protected boolean isWeekend(DayOfWeek dayOfWeek) {
         return weekend.contains(dayOfWeek);
     }
 
-    protected int getStartWeekValue(){
+    protected int getStartWeekValue() {
         return startWeek.getValue();
+    }
+
+    private boolean isEndWeek(DayOfWeek dayOfWeek) {
+        return firstDayOfMonth.getDayOfWeek().getValue() == CalendarUtils.backDay(dayOfWeek.getValue());
+    }
+
+    protected String getCurrentMonthHeader() {
+        return thisDate.getMonth().getDisplayName(TextStyle.FULL, locale) + " " + thisDate.getYear();
     }
 }
