@@ -9,14 +9,14 @@ import java.util.List;
  */
 public class CalendarUtils {
 
-    static final String TYPICAL_STRING_FORMAT = "%4s";
+    static final String TYPICAL_STRING_FORMAT = "%6s";
     private static final String ANSI_RESET = "\u001B[0m";
     private static final String ANSI_RED = "\u001B[31m";
     private static final String ANSI_CYAN = "\u001B[36m";
     private static final String ANSI_YELLOW = "\u001B[33m";
-    public static final String WEB_VIEW = "web";
-    public static final String CONSOLE_VIEW = "console";
-    static final int DAYS_IN_WEEK = 7;
+    protected static final String WEB_VIEW = "web";
+    protected static final String CONSOLE_VIEW = "console";
+    protected static final int DAYS_IN_WEEK = 7;
 
     public static boolean isWeekend(DayOfWeek dayOfWeek, List<DayOfWeek> weekends){
         return weekends.contains(dayOfWeek);

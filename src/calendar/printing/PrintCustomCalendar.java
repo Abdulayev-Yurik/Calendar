@@ -2,6 +2,7 @@ package calendar.printing;
 
 import calendar.console.ConsoleCalendar;
 import calendar.interfaces.Calendar;
+import calendar.interfaces.Printer;
 import calendar.web.WebCalendar;
 
 import java.time.DayOfWeek;
@@ -23,7 +24,7 @@ public class PrintCustomCalendar {
     }
 
     private void innitCustomCalendar() {
-        Calendar calendar = null;
+        Printer calendar = null;
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter type calendar : 1 - Console, 2 - Web Calendar");
         int type = scanner.nextInt();

@@ -2,6 +2,7 @@ package calendar.printing;
 
 import calendar.console.ConsoleCalendar;
 import calendar.interfaces.Calendar;
+import calendar.interfaces.Printer;
 import calendar.web.WebCalendar;
 
 import java.util.Scanner;
@@ -12,7 +13,7 @@ import java.util.Scanner;
 public class PrintDefaultCalendar {
 
     public PrintDefaultCalendar(){
-        Calendar calendar = null;
+        Printer calendar = null;
         System.out.println("Enter print mode, 1-Console, 2-WEB page");
         switch (new Scanner(System.in).nextInt()) {
             case 1:
