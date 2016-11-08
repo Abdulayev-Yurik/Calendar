@@ -1,5 +1,6 @@
 package calendar.utils;
 
+
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.List;
@@ -38,8 +39,7 @@ public class WeekdaysValues extends CalendarUtils{
                                         List<DayOfWeek> weekends, int startWeekendOfDay, String typeView) {
         StringBuilder days = new StringBuilder();
         for (int numberDay = 1; numberDay <= thisDate.getMonth().length(thisDate.isLeapYear()); numberDay++) {
-            String formattedDay = CalendarUtils.getFormattedDay(numberDay + "");
-            days.append(getColorDay(numberDay, currentDay, formattedDay, dayOfWeek, weekends, typeView));
+            days.append(getColorDay(numberDay, currentDay, dayOfWeek, weekends, typeView));
             if (dayOfWeek.getValue() == CalendarUtils.backDay(startWeekendOfDay)) {
                 days.append(toNewLine(typeView));
             }
@@ -57,8 +57,9 @@ public class WeekdaysValues extends CalendarUtils{
         return "";
     }
 
-    private static String getColorDay(int numberDay, int currentDay, String formattedDay,
+    private static String getColorDay(int numberDay, int currentDay,
                                       DayOfWeek dayOfWeek, List<DayOfWeek> weekends, String typeView) {
+        String formattedDay = CalendarUtils.getFormattedDay(numberDay + "");
         if (isCurrentDay(numberDay, currentDay)) {
             return toThisDayColor(formattedDay, typeView);
         } else if (isWeekend(dayOfWeek, weekends)) {
