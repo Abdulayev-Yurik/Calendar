@@ -35,17 +35,17 @@ public class WeekdaysValues extends CalendarUtils{
     }
 
 
-    public static String getMonthValues(LocalDate thisDate, int currentDay, DayOfWeek dayOfWeek,
+    public static String getMonthValues(LocalDate thisDate, int currentDay,
                                         List<DayOfWeek> weekends, int startWeekendOfDay, String typeView) {
         StringBuilder days = new StringBuilder();
         for (int numberDay = 1; numberDay <= thisDate.getMonth().length(thisDate.isLeapYear()); numberDay++) {
-            days.append(getColorDay(numberDay, currentDay, dayOfWeek, weekends, typeView));
-            if (dayOfWeek.getValue() == CalendarUtils.backDay(startWeekendOfDay)) {
+            days.append(getColorDay(numberDay, currentDay, thisDate.getDayOfWeek(), weekends, typeView));
+            if (thisDate.getDayOfWeek().getValue() == CalendarUtils.backDay(startWeekendOfDay)) {
                 days.append(toNewLine(typeView));
             }
-            dayOfWeek = dayOfWeek.plus(1);
+            thisDate = thisDate.plusDays(1);
         }
-        endDayOfCurrentMonth = dayOfWeek;
+        endDayOfCurrentMonth = thisDate.getDayOfWeek();
         return days.toString();
     }
 

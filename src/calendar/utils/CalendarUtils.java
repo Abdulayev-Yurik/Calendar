@@ -22,7 +22,7 @@ public class CalendarUtils {
         return weekends.contains(dayOfWeek);
     }
 
-    static String toAnotherMonthColor(String value, String type){
+    protected static String toAnotherMonthColor(String value, String type){
         if (type.equals(WEB_VIEW))
             return "<td class=\"anotherMonthColor\">" + value + "</td>";
         else if (type.equals(CONSOLE_VIEW))
@@ -31,7 +31,7 @@ public class CalendarUtils {
             return value;
     }
 
-    static String toThisDayColor(String value, String type) {
+    protected static String toThisDayColor(String value, String type) {
         if (type.equals(WEB_VIEW))
             return "<td class=\"currentDay\">" + value + "</td>";
         else if (type.equals(CONSOLE_VIEW))

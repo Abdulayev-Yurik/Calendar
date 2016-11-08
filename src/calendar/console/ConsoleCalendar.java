@@ -55,10 +55,9 @@ public class ConsoleCalendar implements Calendar {
     }
 
     private String getMonthValues(int currentDay) {
-        DayOfWeek dayOfWeek = firstDayOfMonth.getDayOfWeek();
         return new StringBuilder()
                 .append(WeekdaysValues.getPreviousMonthDays(firstDayOfMonth, startWeek.getValue(), CalendarUtils.CONSOLE_VIEW))
-                .append(WeekdaysValues.getMonthValues(firstDayOfMonth, currentDay, dayOfWeek, weekend,
+                .append(WeekdaysValues.getMonthValues(firstDayOfMonth, currentDay, weekend,
                         startWeek.getValue(), CalendarUtils.CONSOLE_VIEW))
                 .append(WeekdaysValues.getNextMonthDays(startWeek.getValue(), CalendarUtils.CONSOLE_VIEW))
                 .toString();

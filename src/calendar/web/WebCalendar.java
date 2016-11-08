@@ -61,11 +61,10 @@ public class WebCalendar implements Calendar {
     }
 
     private String getBody(int currentDay) {
-        DayOfWeek dayOfWeek = firstDayOfMonth.getDayOfWeek();
         StringBuilder days = new StringBuilder();
         days.append("<tr>\n");
         days.append(WeekdaysValues.getPreviousMonthDays(firstDayOfMonth, startWeek.getValue(), CalendarUtils.WEB_VIEW));
-        days.append(WeekdaysValues.getMonthValues(thisDate, currentDay, dayOfWeek, weekend,
+        days.append(WeekdaysValues.getMonthValues(firstDayOfMonth, currentDay, weekend,
                 startWeek.getValue(), CalendarUtils.WEB_VIEW));
         days.append(WeekdaysValues.getNextMonthDays(startWeek.getValue(), CalendarUtils.WEB_VIEW));
         days.append("</tr>");
