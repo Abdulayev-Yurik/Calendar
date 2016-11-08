@@ -15,7 +15,7 @@ import java.util.Locale;
  */
 public abstract class Calendar extends CalendarUtils {
 
-    private static DayOfWeek endDayOfCurrentMonth;
+    private DayOfWeek endDayOfCurrentMonth;
 
     public abstract void print();
 
