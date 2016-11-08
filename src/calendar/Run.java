@@ -17,10 +17,14 @@ public class Run {
     private static void run() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Use default calendar ? 1 - Yes , 2 - No :");
-        if (scanner.nextInt() == 1){
+        int typeCalendar = scanner.nextInt();
+        if (typeCalendar == 1){
             new PrintDefaultCalendar();
-        }else {
+        }else if(typeCalendar == 2){
             new PrintCustomCalendar();
+        }else {
+            System.out.println("incorrect value");
+            run();
         }
     }
 }

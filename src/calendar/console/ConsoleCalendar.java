@@ -1,6 +1,6 @@
 package calendar.console;
 
-import calendar.interfaces.Printer;
+import calendar.interfaces.Calendar;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by yurik on 05.11.16.
  */
-public class ConsoleCalendar extends Printer {
+public class ConsoleCalendar extends Calendar {
     private LocalDate thisDate;
     private DayOfWeek startWeek;
     private List<DayOfWeek> weekend;

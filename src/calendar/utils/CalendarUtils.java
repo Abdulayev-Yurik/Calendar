@@ -18,7 +18,7 @@ public class CalendarUtils {
     protected static final String CONSOLE_VIEW = "console";
     protected static final int DAYS_IN_WEEK = 7;
 
-    public static boolean isWeekend(DayOfWeek dayOfWeek, List<DayOfWeek> weekends){
+    protected static boolean isWeekend(DayOfWeek dayOfWeek, List<DayOfWeek> weekends){
         return weekends.contains(dayOfWeek);
     }
 
@@ -39,7 +39,7 @@ public class CalendarUtils {
         return value;
     }
 
-    public static String toWeekendColor(String value, String type) {
+    protected static String toWeekendColor(String value, String type) {
         if (type.equals(WEB_VIEW))
             return "<td class=\"weekend\">" + value + "</td>";
         else if (type.equals(CONSOLE_VIEW))
@@ -47,15 +47,15 @@ public class CalendarUtils {
         return value;
     }
 
-    public static int backDay(int value) {
+    protected static int backDay(int value) {
         return value == 1 ? 7 : --value;
     }
 
-    public static String getFormattedDay(String numberDay) {
+    protected static String getFormattedDay(String numberDay) {
         return String.format(CalendarUtils.TYPICAL_STRING_FORMAT, numberDay);
     }
 
-    public static int getBeforeValue(LocalDate localDate, int customFirstDay) {
+    protected static int getBeforeValue(LocalDate localDate, int customFirstDay) {
         return localDate.getDayOfWeek().getValue() == customFirstDay ?
                 7 - localDate.minusDays(1).getDayOfMonth() : getBeforeValue(localDate.plusDays(1), customFirstDay);
     }

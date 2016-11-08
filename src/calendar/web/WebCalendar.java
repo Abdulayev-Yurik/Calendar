@@ -1,6 +1,6 @@
 package calendar.web;
 
-import calendar.interfaces.Printer;
+import calendar.interfaces.Calendar;
 
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Created by yurik on 05.11.16.
  */
-public class WebCalendar extends Printer {
+public class WebCalendar extends Calendar {
 
     private LocalDate thisDate;
     private DayOfWeek startWeek;

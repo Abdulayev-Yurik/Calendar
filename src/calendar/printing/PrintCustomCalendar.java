@@ -2,7 +2,6 @@ package calendar.printing;
 
 import calendar.console.ConsoleCalendar;
 import calendar.interfaces.Calendar;
-import calendar.interfaces.Printer;
 import calendar.web.WebCalendar;
 
 import java.time.DayOfWeek;
@@ -24,7 +23,7 @@ public class PrintCustomCalendar {
     }
 
     private void innitCustomCalendar() {
-        Printer calendar = null;
+        Calendar calendar = null;
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter type calendar : 1 - Console, 2 - Web Calendar");
         int type = scanner.nextInt();
@@ -58,8 +57,11 @@ public class PrintCustomCalendar {
         if (weekends.isEmpty()) {
             return Arrays.asList(DayOfWeek.SATURDAY, DayOfWeek.SUNDAY);
         }
+        int numberDay = 0;
         for (String s : weekends.split(",")) {
-            listWeekends.add(DayOfWeek.of(parseInt(s.trim())));
+            numberDay = parseInt(s.trim());
+            if ( numberDay >= DayOfWeek.MONDAY.getValue() && numberDay <= DayOfWeek.SUNDAY.getValue())
+            listWeekends.add(DayOfWeek.of(numberDay));
         }
         return listWeekends;
     }
