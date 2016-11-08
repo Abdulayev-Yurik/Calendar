@@ -11,10 +11,6 @@ import java.util.List;
  * Created by yurik on 05.11.16.
  */
 public class ConsoleCalendar extends Calendar {
-    private LocalDate thisDate;
-    private DayOfWeek startWeek;
-    private List<DayOfWeek> weekend;
-    private LocalDate firstDayOfMonth;
 
     public ConsoleCalendar() {
         this(LocalDate.now());
@@ -29,32 +25,26 @@ public class ConsoleCalendar extends Calendar {
     }
 
     public ConsoleCalendar(LocalDate thisDate, DayOfWeek startWeek, List<DayOfWeek> weekend) {
-        this.thisDate = thisDate;
-        this.startWeek = startWeek;
-        this.weekend = weekend;
+        innit(thisDate, startWeek, weekend);
     }
 
     public void print() {
-        firstDayOfMonth = LocalDate.of(thisDate.getYear(),
-                thisDate.getMonth().getValue(), 1);
-
-        System.out.println(generateView());
+        generateView();
     }
 
-    public String generateView() {
+    public void generateView() {
         StringBuilder view = new StringBuilder();
         view.append(getWeekNames());
         view.append("\n");
         view.append(getMonthValues());
-        return view.toString();
+        System.out.println(view.toString());
     }
 
     public String getMonthValues() {
         return new StringBuilder()
-                .append(getPreviousMonthDays(firstDayOfMonth, startWeek.getValue(), CONSOLE_VIEW))
-                .append(getCurrentMonthValues(firstDayOfMonth, thisDate.getDayOfMonth(),
-                        startWeek.getValue(), weekend, CONSOLE_VIEW))
-                .append(getNextMonthDays(startWeek.getValue(), CONSOLE_VIEW))
+                .append(getPreviousMonthDays(CONSOLE_VIEW))
+                .append(getCurrentMonthValues(CONSOLE_VIEW))
+                .append(getNextMonthDays(CONSOLE_VIEW))
                 .toString();
     }
 
@@ -62,7 +52,7 @@ public class ConsoleCalendar extends Calendar {
         StringBuilder builder = new StringBuilder();
         for (DayOfWeek dayOfWeek : getWeekdays(startWeek.getValue())) {
             String dayName = getFormattedDay(getDayValue(dayOfWeek));
-            builder.append(isWeekend(dayOfWeek, weekend) ?
+            builder.append(isWeekend(dayOfWeek) ?
                     toWeekendColor(dayName, CONSOLE_VIEW) : dayName);
         }
         return builder.toString();

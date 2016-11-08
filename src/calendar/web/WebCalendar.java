@@ -14,11 +14,6 @@ import java.util.List;
  */
 public class WebCalendar extends Calendar {
 
-    private LocalDate thisDate;
-    private DayOfWeek startWeek;
-    private List<DayOfWeek> weekend;
-    private LocalDate firstDayOfMonth;
-
     public WebCalendar() {
         this(LocalDate.now());
     }
@@ -32,19 +27,14 @@ public class WebCalendar extends Calendar {
     }
 
     public WebCalendar(LocalDate thisDate, DayOfWeek startWeek, List<DayOfWeek> weekend) {
-        this.thisDate = thisDate;
-        this.startWeek = startWeek;
-        this.weekend = weekend;
+        innit(thisDate, startWeek, weekend);
     }
 
     public void print() {
-        firstDayOfMonth = LocalDate.of(thisDate.getYear(),
-                thisDate.getMonth().getValue(), 1);
-
         generateView();
     }
 
-    public String generateView() {
+    public void generateView() {
         try (PrintWriter writer = new PrintWriter("calendar.html")) {
             writer.println(getHTMLHeader());
             writer.println(getWeekNames());
@@ -54,16 +44,14 @@ public class WebCalendar extends Calendar {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        return null;
     }
 
     public String getMonthValues() {
         StringBuilder days = new StringBuilder();
         days.append("<tr>\n");
-        days.append(getPreviousMonthDays(firstDayOfMonth, startWeek.getValue(), WEB_VIEW));
-        days.append(getCurrentMonthValues(firstDayOfMonth, thisDate.getDayOfMonth(),
-                startWeek.getValue(), weekend, WEB_VIEW));
-        days.append(getNextMonthDays(startWeek.getValue(), WEB_VIEW));
+        days.append(getPreviousMonthDays(WEB_VIEW));
+        days.append(getCurrentMonthValues(WEB_VIEW));
+        days.append(getNextMonthDays(WEB_VIEW));
         days.append("</tr>");
         return days.toString();
     }
@@ -73,7 +61,7 @@ public class WebCalendar extends Calendar {
         builder.append("<tr>\n\t");
         for (DayOfWeek dayOfWeek : getWeekdays(startWeek.getValue())) {
             String dayName = getFormattedDay(getDayValue(dayOfWeek));
-            builder.append(isWeekend(dayOfWeek, weekend) ?
+            builder.append(isWeekend(dayOfWeek) ?
                     toWeekendColor(dayName, WEB_VIEW) : "<td>" + dayName + "</td>")
                     .append("\n")
                     .append("\t");

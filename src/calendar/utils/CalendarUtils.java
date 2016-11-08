@@ -9,7 +9,7 @@ import java.util.List;
  */
 public class CalendarUtils {
 
-    static final String TYPICAL_STRING_FORMAT = "%6s";
+    static final String TYPICAL_STRING_FORMAT = "%4s";
     private static final String ANSI_RESET = "\u001B[0m";
     private static final String ANSI_RED = "\u001B[31m";
     private static final String ANSI_CYAN = "\u001B[36m";
@@ -17,10 +17,6 @@ public class CalendarUtils {
     protected static final String WEB_VIEW = "web";
     protected static final String CONSOLE_VIEW = "console";
     protected static final int DAYS_IN_WEEK = 7;
-
-    protected static boolean isWeekend(DayOfWeek dayOfWeek, List<DayOfWeek> weekends){
-        return weekends.contains(dayOfWeek);
-    }
 
     protected static String toAnotherMonthColor(String value, String type){
         if (type.equals(WEB_VIEW))
