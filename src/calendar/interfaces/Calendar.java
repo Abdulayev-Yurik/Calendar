@@ -136,7 +136,7 @@ public abstract class Calendar extends CalendarUtils {
         return firstDayOfMonth.getDayOfWeek().getValue() == dayOfWeek.minus(1).getValue();
     }
 
-    protected String getCurrentMonthHeader() {
+    public String getCurrentMonthHeader() {
         return thisDate.getMonth().getDisplayName(TextStyle.FULL, locale) + " " + thisDate.getYear();
     }
 }
