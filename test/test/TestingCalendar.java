@@ -16,7 +16,6 @@ import static org.hamcrest.Matchers.is;
  * Created by employee on 11/2/16.
  */
 public class TestingCalendar {
-    private static final String TYPICAL_STRING_FORMAT = "%4s";
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
 
     @Before

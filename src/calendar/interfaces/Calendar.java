@@ -43,8 +43,7 @@ public abstract class Calendar extends CalendarUtils {
     protected String getPreviousMonthDays(String type) {
         StringBuilder days = new StringBuilder();
         for (int i = getBeforeValue(firstDayOfMonth, startWeek.getValue()); i > 0; i--) {
-            String formattedDay = getFormattedDay(
-                    CalendarUtils.getFormattedDay(firstDayOfMonth.minusDays(i).getDayOfMonth() + ""));
+            String formattedDay = getFormattedDay(firstDayOfMonth.minusDays(i).getDayOfMonth() + "");
             days.append(toAnotherMonthColor(formattedDay, type));
         }
         return days.toString();
@@ -87,7 +86,7 @@ public abstract class Calendar extends CalendarUtils {
 
     private String getColorDay(int numberDay, int currentDay,
                                DayOfWeek dayOfWeek, String typeView) {
-        String formattedDay = CalendarUtils.getFormattedDay(numberDay + "");
+        String formattedDay = getFormattedDay(numberDay + "");
         if (isCurrentDay(numberDay, currentDay)) {
             return toThisDayColor(formattedDay, typeView);
         } else if (isWeekend(dayOfWeek)) {
@@ -134,7 +133,7 @@ public abstract class Calendar extends CalendarUtils {
     }
 
     private boolean isEndWeek(DayOfWeek dayOfWeek) {
-        return firstDayOfMonth.getDayOfWeek().getValue() == CalendarUtils.backDay(dayOfWeek.getValue());
+        return firstDayOfMonth.getDayOfWeek().getValue() == dayOfWeek.minus(1).getValue();
     }
 
     protected String getCurrentMonthHeader() {
